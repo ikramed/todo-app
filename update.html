@@ -7,9 +7,30 @@
     <script defer src="profile.js"></script> 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        
+          .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: #fff;
+            text-decoration: none;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .back-arrow:hover {
+            background-color: #396db7;
+        }
+    </style>
 </head>
 <body>
-
+    <a href="profile.html" class="back-arrow">
+        <span class="material-icons">◀</span>
+    </a>
     <div id="editPage" class="flex-1 p-8 ml-16 md:ml-64">
         <h2 class="text-xl font-semibold text-center">Update Profile</h2><br>
 
