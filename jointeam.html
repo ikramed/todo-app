@@ -97,5 +97,31 @@
     </div>
     
     <button onclick="window.location.href='profile.html'" class="btn" style="width: auto; margin: 20px auto; display: block;">← Back to Profile</button>
+    
+    <script>
+        document.querySelector(".container .btn").addEventListener("click", function() {
+            const nameInput = document.querySelector(".input-field[type='text']");
+            const emailInput = document.querySelector(".input-field[type='email']");
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+            
+            if (name === "" || email === "") {
+                alert("Please fill out all fields.");
+                return;
+            }
+
+            let members = JSON.parse(localStorage.getItem("teamMembers")) || [];
+            members.push({ name, email, img: 'path/to/member/image.png' }); // حط مسار الصورة ديال العضو هنا
+            localStorage.setItem("teamMembers", JSON.stringify(members));
+
+            alert("Request sent successfully!");
+
+            // تنظيف الحقول بعد الإرسال
+            nameInput.value = "";
+            emailInput.value = "";
+        });
+    </script>
+    
 </body>
 </html>
+
