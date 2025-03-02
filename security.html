@@ -121,9 +121,30 @@
             transform: translateX(0) translateY(0);
         }
     }
+      /* Back Arrow Style */
+      .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: #fff;
+            text-decoration: none;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .back-arrow:hover {
+            background-color: #396db7;
+        }
 </style>
 
 <body>
+    <a href="profile.html" class="back-arrow">
+        <span class="material-icons">◀</span>
+    </a>
+
     <div class="background-circle"></div>
     <div class="background-circle"></div>
     <div class="background-circle"></div>
@@ -157,6 +178,7 @@
     </div>
 
     <script>
+         
         document.addEventListener("DOMContentLoaded", function () {
             const changePasswordBtn = document.getElementById("changePasswordBtn");
             const twoFactorBtn = document.getElementById("twoFactorBtn");
