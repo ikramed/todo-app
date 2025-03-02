@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
             window.location.href = "dashboard.html";
         });
     } else {
-        console.error("⚠️ العنصر #loginForm غير موجود في الصفحة!");
+        console.error("erro");
     }
 });
 document.addEventListener("DOMContentLoaded", function () {
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(currentDate); 
         currentDateElement.textContent = currentDate;
     } else {
-        console.error("⚠️ العنصر #currentDate غير موجود في الصفحة!");
+        console.error("error!");
     }
 });
 
