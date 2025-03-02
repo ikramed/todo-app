@@ -63,7 +63,7 @@
         transform: scale(1.05);
     }
 
-    /* Background circles */
+    
     .background-circle {
         position: absolute;
         width: 150px;
@@ -74,19 +74,19 @@
     }
 
     .background-circle:nth-child(1) {
-        top: 30%;
+        top: 80%;
         left: -70px;
         animation-duration: 6s;
     }
 
     .background-circle:nth-child(2) {
         top: 60%;
-        right: -100px;
+        right: 100px;
         animation-duration: 9s;
     }
 
     .background-circle:nth-child(3) {
-        bottom: 20%;
+        bottom: 80%;
         left: 50%;
         animation-duration: 8s;
     }
@@ -101,10 +101,30 @@
         100% {
             transform: translateX(0) translateY(0);
         }
-    }
+    } 
+      .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: #fff;
+            text-decoration: none;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .back-arrow:hover {
+            background-color: #396db7;
+        }
+
 </style>
 
 <body>
+    <a href="security.html" class="back-arrow">
+        <span class="material-icons">◀</span>
+    </a>
     <div class="background-circle"></div>
     <div class="background-circle"></div>
     <div class="background-circle"></div>
@@ -137,6 +157,21 @@
             const saveBtn = document.getElementById("saveBtn");
 
             saveBtn.addEventListener("click", function () {
+                const oldPassword = document.getElementById("oldPassword").value;
+                const newPassword = document.getElementById("newPassword").value;
+                const confirmPassword = document.getElementById("confirmPassword").value;
+
+               
+                if (!oldPassword || !newPassword || !confirmPassword) {
+                    alert("Please fill in all fields.");
+                    return;
+                }
+
+                if (newPassword !== confirmPassword) {
+                    alert("New password and confirm password do not match.");
+                    return;
+                }
+
                 alert("Password changed successfully!");
                 window.location.href = "security.html";
             });
@@ -144,3 +179,4 @@
     </script>
 </body>
 </html>
+
