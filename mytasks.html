@@ -14,13 +14,14 @@
             padding: 20px;
             margin: 0;
         }
-
         .task-container {
             max-width: 800px;
             margin: 40px auto;
             padding: 20px;
+            background-color: #222;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-
         .task-item {
             background-color: #333;
             border-radius: 8px;
@@ -31,7 +32,6 @@
             justify-content: space-between;
             align-items: center;
         }
-
         .progress-bar {
             width: 100%;
             height: 10px;
@@ -40,55 +40,119 @@
             overflow: hidden;
             margin-top: 10px;
         }
-
         .progress {
             height: 100%;
             background-color: #4CAF50;
             width: 0%;
             transition: width 1s ease-in-out;
         }
-
-        .background-line {
-            position: absolute;
+        .input-field {
             width: 100%;
-            height: 2px;
-            background-color: rgba(255, 255, 255, 0.2);
-            animation: moveLines 5s infinite linear;
-        }
-
-        @keyframes moveLines {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(100%);
-            }
+            padding: 8px;
+            margin: 8px 0;
+            border-radius: 4px;
+            border: none;
+            outline: none;
+            color: #000;
         }
     </style>
 </head>
 <body>
-    <div class="background-line" style="top: 30%;"></div>
-    <div class="background-line" style="top: 60%;"></div>
-    
     <button onclick="window.location.href='dashboard.html'" class="bg-blue-500 text-white px-4 py-2 rounded-md mb-4">← Back</button>
-
+    
     <div class="task-container">
-        <h2 class="text-center text-2xl font-semibold mb-5">My Tasks</h2>
-
-        <div class="task-item">
-            <span>Task 1: Design Home Page</span>
-            <div class="progress-bar"><div class="progress" style="width: 70%;"></div></div>
-        </div>
-
-        <div class="task-item">
-            <span>Task 2: Fix Bugs</span>
-            <div class="progress-bar"><div class="progress" style="width: 40%;"></div></div>
-        </div>
-
-        <div class="task-item">
-            <span>Task 3: Implement API</span>
-            <div class="progress-bar"><div class="progress" style="width: 85%;"></div></div>
-        </div>
+        <h2 class="text-center text-2xl font-semibold mb-5">Add Task</h2>
+        
+        <label>Task Name</label>
+        <input type="text" id="taskName" class="input-field" placeholder="Enter task name">
+        
+        <label>Add Member</label>
+        <div id="memberList" class="flex space-x-2 mb-4"></div>
+        
+        <label>Date</label>
+        <input type="date" id="taskDate" class="input-field">
+        
+        <label>Start Time</label>
+        <input type="time" id="startTime" class="input-field">
+        
+        <label>End Time</label>
+        <input type="time" id="endTime" class="input-field">
+        
+        <button onclick="saveTask()" class="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600">Save</button>
     </div>
+    
+    <div class="task-container mt-6">
+        <h2 class="text-center text-2xl font-semibold mb-5">My Tasks</h2>
+        <div id="taskList"></div>
+    </div>
+    
+    <script>
+        document.getElementById("memberList").innerHTML = ""; 
+        let members = JSON.parse(localStorage.getItem("teamMembers")) || [];
+
+        members.forEach(member => {
+            const imgElement = document.createElement("img");
+            imgElement.src = member.img; 
+            imgElement.alt = member.name;
+            imgElement.classList.add("w-10", "h-10", "rounded-full", "cursor-pointer");
+            
+            imgElement.addEventListener("click", function() {
+                selectMember(member);
+            });
+            
+            document.getElementById("memberList").appendChild(imgElement);
+        });
+
+        function selectMember(member) {
+            alert(`Selected member: ${member.name}`);
+        
+        }
+
+        function saveTask() {
+            const taskName = document.getElementById("taskName").value;
+            const taskDate = document.getElementById("taskDate").value;
+            const startTime = document.getElementById("startTime").value;
+            const endTime = document.getElementById("endTime").value;
+            
+            if (taskName && taskDate && startTime && endTime) {
+                const taskList = document.getElementById("taskList");
+                const taskItem = document.createElement("div");
+                taskItem.classList.add("task-item");
+                taskItem.innerHTML = `
+                    <div>
+                        <strong>${taskName}</strong>
+                        <p>${taskDate} | ${startTime} - ${endTime}</p>
+                    </div>
+                    <div>
+                        <button class="bg-yellow-500 px-2 py-1 rounded-md text-white" onclick="editTask(this)">Edit</button>
+                        <button class="bg-red-500 px-2 py-1 rounded-md text-white" onclick="deleteTask(this)">Delete</button>
+                    </div>
+                `;
+                taskList.appendChild(taskItem);
+                document.getElementById("taskName").value = "";
+                document.getElementById("taskDate").value = "";
+                document.getElementById("startTime").value = "";
+                document.getElementById("endTime").value = "";
+            } else {
+                alert("Please fill all fields");
+            }
+        }
+
+        function deleteTask(button) {
+            button.parentElement.parentElement.remove();
+        }
+
+        function editTask(button) {
+            const taskItem = button.parentElement.parentElement;
+            document.getElementById("taskName").value = taskItem.children[0].children[0].textContent;
+            const details = taskItem.children[0].children[1].textContent.split(" | ");
+            document.getElementById("taskDate").value = details[0];
+            const times = details[1].split(" - ");
+            document.getElementById("startTime").value = times[0];
+            document.getElementById("endTime").value = times[1];
+            taskItem.remove();
+        }
+    </script>
 </body>
 </html>
+
