@@ -32,20 +32,6 @@
             justify-content: space-between;
             align-items: center;
         }
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background-color: #555;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-top: 10px;
-        }
-        .progress {
-            height: 100%;
-            background-color: #4CAF50;
-            width: 0%;
-            transition: width 1s ease-in-out;
-        }
         .input-field {
             width: 100%;
             padding: 8px;
@@ -66,9 +52,6 @@
         <label>Task Name</label>
         <input type="text" id="taskName" class="input-field" placeholder="Enter task name">
         
-        <label>Add Member</label>
-        <div id="memberList" class="flex space-x-2 mb-4"></div>
-        
         <label>Date</label>
         <input type="date" id="taskDate" class="input-field">
         
@@ -87,25 +70,12 @@
     </div>
     
     <script>
-        document.getElementById("memberList").innerHTML = ""; 
-        let members = JSON.parse(localStorage.getItem("teamMembers")) || [];
-
-        members.forEach(member => {
-            const imgElement = document.createElement("img");
-            imgElement.src = member.img; 
-            imgElement.alt = member.name;
-            imgElement.classList.add("w-10", "h-10", "rounded-full", "cursor-pointer");
-            
-            imgElement.addEventListener("click", function() {
-                selectMember(member);
+       
+        window.onload = function() {
+            let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            tasks.forEach(task => {
+                displayTask(task);
             });
-            
-            document.getElementById("memberList").appendChild(imgElement);
-        });
-
-        function selectMember(member) {
-            alert(`Selected member: ${member.name}`);
-        
         }
 
         function saveTask() {
@@ -115,20 +85,21 @@
             const endTime = document.getElementById("endTime").value;
             
             if (taskName && taskDate && startTime && endTime) {
-                const taskList = document.getElementById("taskList");
-                const taskItem = document.createElement("div");
-                taskItem.classList.add("task-item");
-                taskItem.innerHTML = `
-                    <div>
-                        <strong>${taskName}</strong>
-                        <p>${taskDate} | ${startTime} - ${endTime}</p>
-                    </div>
-                    <div>
-                        <button class="bg-yellow-500 px-2 py-1 rounded-md text-white" onclick="editTask(this)">Edit</button>
-                        <button class="bg-red-500 px-2 py-1 rounded-md text-white" onclick="deleteTask(this)">Delete</button>
-                    </div>
-                `;
-                taskList.appendChild(taskItem);
+                const newTask = {
+                    name: taskName,
+                    date: taskDate,
+                    startTime: startTime,
+                    endTime: endTime
+                };
+
+                let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+                tasks.push(newTask);
+                localStorage.setItem("tasks", JSON.stringify(tasks));
+
+               
+                displayTask(newTask);
+                
+                
                 document.getElementById("taskName").value = "";
                 document.getElementById("taskDate").value = "";
                 document.getElementById("startTime").value = "";
@@ -138,21 +109,54 @@
             }
         }
 
+        function displayTask(task) {
+            const taskList = document.getElementById("taskList");
+            const taskItem = document.createElement("div");
+            taskItem.classList.add("task-item");
+            taskItem.innerHTML = `
+                <div>
+                    <strong>${task.name}</strong>
+                    <p>${task.date} | ${task.startTime} - ${task.endTime}</p>
+                </div>
+                <div>
+                    <button class="bg-yellow-500 px-2 py-1 rounded-md text-white" onclick="editTask(this)">Edit</button>
+                    <button class="bg-red-500 px-2 py-1 rounded-md text-white" onclick="deleteTask(this)">Delete</button>
+                </div>
+            `;
+            taskList.appendChild(taskItem);
+        }
+
         function deleteTask(button) {
-            button.parentElement.parentElement.remove();
+            const taskItem = button.parentElement.parentElement;
+            taskItem.remove();
+
+           
+            let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            tasks = tasks.filter(task => task.name !== taskItem.querySelector("strong").textContent);
+            localStorage.setItem("tasks", JSON.stringify(tasks));
         }
 
         function editTask(button) {
             const taskItem = button.parentElement.parentElement;
-            document.getElementById("taskName").value = taskItem.children[0].children[0].textContent;
-            const details = taskItem.children[0].children[1].textContent.split(" | ");
-            document.getElementById("taskDate").value = details[0];
-            const times = details[1].split(" - ");
-            document.getElementById("startTime").value = times[0];
-            document.getElementById("endTime").value = times[1];
+            const taskName = taskItem.querySelector("strong").textContent;
+            const taskDate = taskItem.querySelector("p").textContent.split(" | ")[0];
+            const [startTime, endTime] = taskItem.querySelector("p").textContent.split(" | ")[1].split(" - ");
+
+            document.getElementById("taskName").value = taskName;
+            document.getElementById("taskDate").value = taskDate;
+            document.getElementById("startTime").value = startTime;
+            document.getElementById("endTime").value = endTime;
+
+          
+            let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            tasks = tasks.filter(task => task.name !== taskName);
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+
+           
             taskItem.remove();
         }
     </script>
 </body>
 </html>
+
 
