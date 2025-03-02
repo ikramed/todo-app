@@ -92,9 +92,32 @@
         .add-project-button:hover {
             background-color: #45a049;
         }
+
+        /* Back Arrow Style */
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: #fff;
+            text-decoration: none;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .back-arrow:hover {
+            background-color: #396db7;
+        }
     </style>
 </head>
 <body>
+
+    <!-- Back Arrow to navigate to dashboard.html -->
+    <a href="profile.html" class="back-arrow">
+        <span class="material-icons">◀</span>
+    </a>
 
     <div id="projectsPage" class="p-4 ml-16 md:ml-6">
         <div class="flex justify-between items-center mb-6">
@@ -103,22 +126,18 @@
         </div>
 
         <div id="projectsList" class="space-y-4 projects-container">
-           
+            <!-- Dynamic Projects List -->
         </div>
     </div>
 
     <script defer>
         document.addEventListener("DOMContentLoaded", function () {
-          
             const projects = JSON.parse(localStorage.getItem("projects")) || [];
 
-           
             const projectsList = document.getElementById("projectsList");
 
-            
             projectsList.innerHTML = '';
 
-           
             projects.forEach(project => {
                 const projectElement = document.createElement("div");
                 projectElement.classList.add("project");
@@ -160,3 +179,4 @@
 
 </body>
 </html>
+
