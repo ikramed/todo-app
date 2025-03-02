@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = "help.html";
     });
 
-    e
+   
     languageSelect.addEventListener("change", function () {
         const selectedLanguage = languageSelect.value;
         localStorage.setItem("language", selectedLanguage); 
