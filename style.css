@@ -4,23 +4,31 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 20vh;
+    height: 100vh;
     margin: 0;
+    background: radial-gradient(circle, rgba(52, 152, 219, 0.6), rgba(41, 128, 185, 0.4), rgba(22, 73, 114, 0.3)); /* تأثير دوائر مع ألوان زرقاء تدريجية */
 }
 
+.logo {
+    position: absolute;
+    top: 20px; 
+    left: 20px; 
+    z-index: 10; 
+}
 
-
+.logo-img {
+    width: 90px; 
+    height: auto;
+}
 
 .container {
     display: grid;
     grid-template-columns: 1fr;
-   
     width: 90%;
     max-width: 400px;
     margin: auto;
     position: relative;
 }
-
 
 .image-wrapper {
     position: relative;
@@ -30,25 +38,41 @@ body {
 
 .image {
     width: 100%;
-    max-width: 350px; 
+    max-width: 350px;
     height: auto;
-    border-radius: 12px
+    border-radius: 12px;
 }
-
 
 .dot {
     position: absolute;
     border-radius: 50%;
-    background-color: #585854; 
-    opacity: 18;
+    background-color: #585854;
+    opacity: 0.18; 
+    animation: moveDots 10s infinite linear;
 }
 
+.dot1 { width: 100px; height: 100px; right: 30%; top: 20%; }
+.dot2 { width: 120px; height: 120px; left: 20%; bottom: 20%; }
+.dot3 { width: 140px; height: 140px; left: 60%; top: 60%; }
 
-.dot1 { width: 10px; height: 12px;right:900px  }
-.dot2 { width: 12px; height: 12px;left:900px }
-.dot3 { width: 10px; height: 12px;right:900px }
 
-
+@keyframes moveDots {
+    0% {
+        transform: translate(0, 0);
+    }
+    25% {
+        transform: translate(30px, -30px);
+    }
+    50% {
+        transform: translate(-50px, 40px);
+    }
+    75% {
+        transform: translate(40px, 20px);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
 
 @media (max-width: 600px) {
     .container {
@@ -57,15 +81,15 @@ body {
     }
 
     .image {
-        max-width: 250px; 
+        max-width: 250px;
     }
 
-   
     .dot1, .dot2, .dot3 {
-        width: 10px;
-        height: 10px;
+        width: 50px;
+        height: 50px;
     }
 }
+
 .navigation {
     position: absolute;
     bottom: 20px;
@@ -75,7 +99,7 @@ body {
     justify-content: space-between;
     width: 80%;
     max-width: 400px;
-    font-size:larger;
+    font-size: larger;
 }
 
 button {
@@ -96,7 +120,6 @@ button:hover {
 button:active {
     background-color: #1d6b8e;
 }
-
 
 .content {
     flex: 1;
