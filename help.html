@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: #fff;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: rgba(254, 64, 64, 0.3);
+        }
+
+        .back-button svg {
+            width: 24px;
+            height: 24px;
+            fill: rgb(217, 80, 80);
+        }
+
+       
+        .help-item {
+            background-color: #333;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+       
+        .help-item span {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .help-item p {
+            font-size: 16px;
+            color: #bbb;
+            margin-top: 10px;
+        }
+
+       
+        .background-circle {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: moveBackground 6s infinite ease-in-out;
+        }
+
+        .background-circle:nth-child(1) {
+            top: 30%;
+            left: -70px;
+            animation-duration: 6s;
+        }
+
+        .background-circle:nth-child(2) {
+            top: 60%;
+            right: -100px;
+            animation-duration: 9s;
+        }
+
+        .background-circle:nth-child(3) {
+            bottom: 20%;
+            left: 50%;
+            animation-duration: 8s;
+        }
+
+        @keyframes moveBackground {
+            0% {
+                transform: translateX(0) translateY(0);
+            }
+            50% {
+                transform: translateX(30px) translateY(30px);
+            }
+            100% {
+                transform: translateX(0) translateY(0);
+            }
+        }
+
+       
+        .help-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    
+    <button class="back-button" onclick="goBack()">
+      ◀
+    </button>
+
+    <div class="background-circle"></div>
+    <div class="background-circle"></div>
+    <div class="background-circle"></div>
+
+    <div class="help-container">
+        <h2 class="text-center text-2xl font-semibold mb-5">Help Center</h2>
+
+       
+        <div class="help-item">
+            <span>How to Change Your Password</span>
+            <p>If you need to change your password, follow these simple steps:</p>
+            <ul>
+                <li>Go to your profile settings.</li>
+                <li>Click on the "Change Password" button.</li>
+                <li>Enter your old and new passwords.</li>
+                <li>Click "Save" to confirm your new password.</li>
+            </ul>
+        </div>
+
+        <div class="help-item">
+            <span>How to Enable Notifications</span>
+            <p>To enable push notifications, please follow these steps:</p>
+            <ul>
+                <li>Go to your settings page.</li>
+                <li>Toggle the "Push Notifications" button to "Activate".</li>
+                <li>Make sure your browser allows notifications.</li>
+            </ul>
+        </div>
+
+      
+        <div class="help-item">
+            <span>Contact Support</span>
+            <p>If you have any further issues or questions, you can contact our support team:</p>
+            <ul>
+                <li>Email us at: devstrom@gmail.com</li>
+                <li>Call us at: +212 0643635980</li>
+                <li>Or chat with us directly on our website.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.location.href = "setting.html"; 
+        }
+    </script>
+
+</body>
+</html>

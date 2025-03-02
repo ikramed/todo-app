@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Logs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(45deg, #6a11cb, #2575fc);
+        color: #fff;
+        padding: 20px;
+        margin: 0;
+    }
+
+    .logs-container {
+        background-color: #1e1e2f;
+        border-radius: 10px;
+        padding: 30px;
+        max-width: 600px;
+        margin: auto;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .logs-header {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .logs-item {
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #333;
+        border-radius: 8px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .logs-item span {
+        font-size: 1rem;
+    }
+
+    .logs-item button {
+        padding: 8px 15px;
+        background-color: #007bff;
+        border: none;
+        border-radius: 50px;
+        color: #fff;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .logs-item button:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }
+
+    .back-button {
+        padding: 12px 20px;
+        background-color: #28a745;
+        border: none;
+        border-radius: 50px;
+        color: #fff;
+        cursor: pointer;
+        font-weight: bold;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .back-button:hover {
+        background-color: #218838;
+    }
+
+   
+    .background-circle {
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        animation: moveBackground 6s infinite ease-in-out;
+    }
+
+    .background-circle:nth-child(1) {
+        top: 30%;
+        left: -70px;
+        animation-duration: 6s;
+    }
+
+    .background-circle:nth-child(2) {
+        top: 60%;
+        right: -100px;
+        animation-duration: 9s;
+    }
+
+    .background-circle:nth-child(3) {
+        bottom: 20%;
+        left: 50%;
+        animation-duration: 8s;
+    }
+
+    @keyframes moveBackground {
+        0% {
+            transform: translateX(0) translateY(0);
+        }
+        50% {
+            transform: translateX(30px) translateY(30px);
+        }
+        100% {
+            transform: translateX(0) translateY(0);
+        }
+    }
+</style>
+
+<body>
+    <div class="background-circle"></div>
+    <div class="background-circle"></div>
+    <div class="background-circle"></div>
+
+    <div class="logs-container">
+        <h2 class="logs-header">Security Logs</h2>
+
+        <div class="logs-item">
+            <span>Login attempt at 2025-03-01 10:00 AM</span>
+            <button>View</button>
+        </div>
+
+        <div class="logs-item">
+            <span>Password change at 2025-03-01 11:00 AM</span>
+            <button>View</button>
+        </div>
+
+        <div class="logs-item">
+            <span>IP address change at 2025-03-01 12:00 PM</span>
+            <button>View</button>
+        </div>
+
+       
+        <button class="back-button" onclick="window.location.href='security.html';">Back to Settings</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const viewButtons = document.querySelectorAll(".logs-item button");
+
+            viewButtons.forEach(function (button) {
+                button.addEventListener("click", function () {
+                    alert("Viewing log details...");
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About App</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: #fff;
+            padding: 20px;
+            margin: 0;
+        }
+
+       
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .back-button svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+     
+        .about-container {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .about-title {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .about-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #ddd;
+            text-align: center;
+        }
+
+        
+        .background-circle {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: moveBackground 6s infinite ease-in-out;
+        }
+
+        .background-circle:nth-child(1) {
+            top: 30%;
+            left: -70px;
+            animation-duration: 6s;
+        }
+
+        .background-circle:nth-child(2) {
+            top: 60%;
+            right: -100px;
+            animation-duration: 9s;
+        }
+
+        .background-circle:nth-child(3) {
+            bottom: 20%;
+            left: 50%;
+            animation-duration: 8s;
+        }
+
+        @keyframes moveBackground {
+            0% {
+                transform: translateX(0) translateY(0);
+            }
+            50% {
+                transform: translateX(30px) translateY(30px);
+            }
+            100% {
+                transform: translateX(0) translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+   
+    <button class="back-button" onclick="goBack()">
+        <svg viewBox="0 0 24 24">
+            <path d="M15 19l-7-7 7-7"></path>
+        </svg>
+    </button>
+
+    <div class="background-circle"></div>
+    <div class="background-circle"></div>
+    <div class="background-circle"></div>
+
+    <div class="about-container">
+        <h2 class="about-title">About This App</h2>
+        
+        <p class="about-text">
+            Welcome to our application! This app is designed to help users manage their tasks efficiently, 
+            communicate with their team, and enhance productivity. Our goal is to provide a smooth user experience 
+            with an intuitive design and powerful features.
+        </p>
+
+        <p class="about-text mt-4">
+            <strong>Key Features:</strong><br>
+            - Secure and easy-to-use interface.<br>
+            - Real-time messaging system.<br>
+            - Task progress tracking.<br>
+            - Notifications and reminders.<br>
+            - Multi-language support.<br>
+        </p>
+
+        <p class="about-text mt-4">
+            <strong>Version:</strong> 1.0.0<br>
+            <strong>Developer:</strong> DevStrom Team<br>
+            <strong>Contact:</strong> devstrom@gmail.com<br>
+        </p>
+    </div>
+
+    <script>
+        function goBack() {
+            window.location.href = "setting.html"; }
+    </script>
+
+</body>
+</html>

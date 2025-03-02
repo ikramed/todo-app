@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join My Team</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #ccb85f, #c9c177);
+            color: #fff;
+            padding: 20px;
+            margin: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* خطوط متحركة */
+        .moving-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.3);
+            animation: moveLine 6s infinite alternate ease-in-out;
+        }
+
+        .moving-line:nth-child(1) {
+            top: 20%;
+            animation-duration: 5s;
+        }
+        .moving-line:nth-child(2) {
+            top: 50%;
+            animation-duration: 7s;
+        }
+        .moving-line:nth-child(3) {
+            top: 80%;
+            animation-duration: 6s;
+        }
+
+        @keyframes moveLine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 60px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background: #69560a;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            color: white;
+        }
+
+        .btn:hover {
+            background: #573e10;
+        }
+    </style>
+</head>
+<body>
+    <div class="moving-line"></div>
+    <div class="moving-line"></div>
+    <div class="moving-line"></div>
+    
+    <div class="container">
+        <h2 class="text-2xl font-semibold mb-4">Join My Team</h2>
+        <p class="mb-4">Fill out the form below to request to join the team.</p>
+        
+        <input type="text" class="input-field" placeholder="Your Name" required>
+        <input type="email" class="input-field" placeholder="Your Email" required>
+        
+        <button class="btn">Send Request</button>
+    </div>
+    
+    <button onclick="window.location.href='profile.html'" class="btn" style="width: auto; margin: 20px auto; display: block;">← Back to Profile</button>
+</body>
+</html>

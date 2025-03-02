@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Detail Booking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .slide-in {
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: slideIn 0.8s ease-in-out forwards;
+        }
+
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-6">
+    <button onclick="window.location.href='dashboard.html'" class="bg-gray-200 p-2 rounded-full shadow-md hover:bg-blue-300 mb-4">⬅</button>
+    
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg slide-in">
+        <h2 class="text-2xl font-semibold mb-4">Create Detail Booking</h2>
+        <form id="bookingForm" class="space-y-4">
+            <input type="text" id="bookingTitle" placeholder="Booking Title" class="w-full p-2 border rounded-md">
+            <textarea id="bookingDescription" placeholder="Description" class="w-full p-2 border rounded-md"></textarea>
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-green-600">Save Booking</button>
+        </form>
+        <div id="bookingList" class="mt-6"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            loadBookings();
+        });
+
+        document.getElementById("bookingForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const title = document.getElementById("bookingTitle").value;
+            const description = document.getElementById("bookingDescription").value;
+
+            if (title && description) {
+                let bookings = JSON.parse(localStorage.getItem("userBookings")) || [];
+                const newBooking = { title, description };
+                bookings.push(newBooking);
+                localStorage.setItem("userBookings", JSON.stringify(bookings));
+                displayBooking(newBooking);
+                document.getElementById("bookingForm").reset();
+            } else {
+                alert("Please fill in all fields.");
+            }
+        });
+
+        function loadBookings() {
+            let bookings = JSON.parse(localStorage.getItem("userBookings")) || [];
+            bookings.forEach(displayBooking);
+        }
+
+        function displayBooking(booking) {
+            const bookingList = document.getElementById("bookingList");
+            const bookingItem = document.createElement("div");
+            bookingItem.classList.add("bg-gray-200", "p-4", "rounded-md", "mb-2");
+
+            
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.classList.add("bg-red-500", "text-white", "px-2", "py-1", "rounded-md", "ml-4", "hover:bg-red-600");
+            deleteButton.addEventListener("click", function () {
+                deleteBooking(booking);
+            });
+
+            bookingItem.innerHTML = `<h3 class='font-semibold'>${booking.title}</h3><p>${booking.description}</p>`;
+            bookingItem.appendChild(deleteButton);
+            bookingList.appendChild(bookingItem);
+        }
+
+        function deleteBooking(booking) {
+            let bookings = JSON.parse(localStorage.getItem("userBookings")) || [];
+            bookings = bookings.filter(b => b.title !== booking.title || b.description !== booking.description);
+            localStorage.setItem("userBookings", JSON.stringify(bookings));
+
+        
+            document.getElementById("bookingList").innerHTML = '';
+            loadBookings();
+        }
+    </script>
+</body>
+</html>
+
+

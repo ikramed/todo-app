@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Project</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: #f0f4f8;
+            font-family: 'Arial', sans-serif;
+        }
+
+        #editProjectPage {
+            background: linear-gradient(to right, #396db7, #99b5dd);
+            padding: 20px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 40px;
+            width: 90%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #editProjectPage::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, transparent 10.1%);
+            transform: translateX(-50%) translateY(-50%);
+            z-index: 0;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .form-container input, .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .form-container button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+
+        .back-button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            margin-top: 15px; 
+            transition: background 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #45a049;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px; 
+        }
+
+        .header-container h2 {
+            font-size: 1.25rem;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="editProjectPage">
+        <div class="header-container">
+            <h2>Edit Projects</h2>
+           
+        </div>
+
+        <div class="form-container">
+            <form id="editProjectForm">
+                <div class="mb-4">
+                    <label for="projectName" class="block text-sm font-medium text-gray-700">Project Name</label>
+                    <input type="text" id="projectName" name="projectName" required class="mt-1 p-2 w-full border rounded-md">
+                </div>
+                <div class="mb-4">
+                    <label for="projectDescription" class="block text-sm font-medium text-gray-700">Project Description</label>
+                    <textarea id="projectDescription" name="projectDescription" required class="mt-1 p-2 w-full border rounded-md"></textarea>
+                </div>
+                <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-md">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script defer>
+     document.addEventListener("DOMContentLoaded", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectId = parseInt(urlParams.get("id"));
+
+        const projects = JSON.parse(localStorage.getItem("projects")) || [];
+        const project = projects.find(p => p.id === projectId);
+
+        if (project) {
+            document.getElementById("projectName").value = project.name;
+            document.getElementById("projectDescription").value = project.description;
+        }
+
+        document.getElementById("editProjectForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            project.name = document.getElementById("projectName").value;
+            project.description = document.getElementById("projectDescription").value;
+
+            localStorage.setItem("projects", JSON.stringify(projects));
+            window.location.href = "project.html";
+        });
+
+
+    });
+    </script>
+
+</body>
+</html>

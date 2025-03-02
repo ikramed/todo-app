@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Password</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(45deg, #6a11cb, #2575fc);
+        color: #fff;
+        padding: 20px;
+        margin: 0;
+    }
+
+    .setting-container {
+        background-color: #1e1e2f;
+        border-radius: 10px;
+        padding: 30px;
+        max-width: 600px;
+        margin: auto;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .setting-header {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .setting-item {
+        margin-bottom: 20px;
+    }
+
+    .setting-item input {
+        width: 100%;
+        padding: 12px;
+        background-color: #333;
+        border: 1px solid #444;
+        border-radius: 5px;
+        color: #fff;
+        font-size: 1rem;
+    }
+
+    .setting-item button {
+        padding: 12px 20px;
+        background-color: #007bff;
+        border: none;
+        border-radius: 50px;
+        color: #fff;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        width: 100%;
+    }
+
+    .setting-item button:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }
+
+    /* Background circles */
+    .background-circle {
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        animation: moveBackground 6s infinite ease-in-out;
+    }
+
+    .background-circle:nth-child(1) {
+        top: 30%;
+        left: -70px;
+        animation-duration: 6s;
+    }
+
+    .background-circle:nth-child(2) {
+        top: 60%;
+        right: -100px;
+        animation-duration: 9s;
+    }
+
+    .background-circle:nth-child(3) {
+        bottom: 20%;
+        left: 50%;
+        animation-duration: 8s;
+    }
+
+    @keyframes moveBackground {
+        0% {
+            transform: translateX(0) translateY(0);
+        }
+        50% {
+            transform: translateX(30px) translateY(30px);
+        }
+        100% {
+            transform: translateX(0) translateY(0);
+        }
+    }
+</style>
+
+<body>
+    <div class="background-circle"></div>
+    <div class="background-circle"></div>
+    <div class="background-circle"></div>
+
+    <div class="setting-container">
+        <h2 class="setting-header">Change Password</h2>
+
+        <div class="setting-item">
+            <label for="oldPassword">Old Password</label>
+            <input type="password" id="oldPassword" placeholder="Enter old password">
+        </div>
+
+        <div class="setting-item">
+            <label for="newPassword">New Password</label>
+            <input type="password" id="newPassword" placeholder="Enter new password">
+        </div>
+
+        <div class="setting-item">
+            <label for="confirmPassword">Confirm New Password</label>
+            <input type="password" id="confirmPassword" placeholder="Confirm new password">
+        </div>
+
+        <div class="setting-item">
+            <button id="saveBtn">Save Changes</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const saveBtn = document.getElementById("saveBtn");
+
+            saveBtn.addEventListener("click", function () {
+                alert("Password changed successfully!");
+                window.location.href = "security.html";
+            });
+        });
+    </script>
+</body>
+</html>

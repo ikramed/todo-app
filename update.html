@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile</title>
+    <script defer src="profile.js"></script> 
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div id="editPage" class="flex-1 p-8 ml-16 md:ml-64">
+        <h2 class="text-xl font-semibold text-center">Update Profile</h2><br>
+
+        
+        <div class="bg-gray-200 p-6 rounded-md">
+            <label>Name:</label>
+            <input type="text" id="userNameInput" class="w-full p-2 mt-2 border rounded-md" placeholder="Enter your name">
+
+            <label>Username:</label>
+            <input type="text" id="userUsernameInput" class="w-full p-2 mt-2 border rounded-md" placeholder="Enter your username">
+
+            <div class="relative">
+                <br>
+                <img id="previewImage" src="download (3).png" alt="" class="w-32 h-32 rounded-full object-cover">
+                <button id="removePicBtn" class="absolute right-40 bg-red-300 text-white p-1 ">
+                    🚮
+                </button>
+            </div>
+            <br>
+            <input type="file" id="userProfilePicInput">
+            
+            <button id="saveBtn" class="bg-blue-500 text-white px-6 py-2 rounded-md w-full mt-4">Save</button>
+        </div>
+    </div>
+
+</body>
+</html>

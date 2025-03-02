@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Project</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: #f0f4f8;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #addProjectPage {
+            background: linear-gradient(to right, #396db7, #99b5dd);
+            padding: 20px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        #addProjectPage::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, transparent 10.1%);
+            transform: translateX(-50%) translateY(-50%);
+            z-index: 0;
+        }
+
+        .projects-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .form-container input, .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .form-container button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: background 0.3s ease;
+            z-index: 2; 
+        }
+
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+
+        .add-project-button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            transition: background 0.3s ease;
+            z-index: 2; }
+
+        .add-project-button:hover {
+            background-color: #45a049;
+        }
+
+        .back-button {
+            position: relative;
+            z-index: 3; 
+        }
+    </style>
+</head>
+<body>
+
+    <div id="addProjectPage">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-semibold text-white">Add New Project</h2>
+            <button onclick="window.location.href='project.html'" class="bg-gray-500 text-white px-6 py-2 rounded-md back-button">Back to Projects</button>
+        </div>
+
+        <div class="form-container">
+         
+            <form id="addProjectForm">
+                <div class="mb-4">
+                    <label for="projectName" class="block text-sm font-medium text-gray-700">Project Name</label>
+                    <input type="text" id="projectName" name="projectName" class="mt-1 p-2 w-full border rounded-md" required />
+                </div>
+                <div class="mb-4">
+                    <label for="projectDescription" class="block text-sm font-medium text-gray-700">Project Description</label>
+                    <textarea id="projectDescription" name="projectDescription" rows="4" class="mt-1 p-2 w-full border rounded-md" required></textarea>
+                </div>
+                <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-md">Save Project</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("addProjectForm").addEventListener("submit", function (event) {
+            event.preventDefault();  
+            
+            const projectName = document.getElementById("projectName").value;
+            const projectDescription = document.getElementById("projectDescription").value;
+
+            const projects = JSON.parse(localStorage.getItem("projects")) || [];
+
+            const newProject = {
+                id: Date.now(),  
+                name: projectName,
+                description: projectDescription
+            };
+
+            projects.push(newProject);
+
+           
+            localStorage.setItem("projects", JSON.stringify(projects));
+
+            
+            window.location.href = "project.html";
+        });
+    </script>
+
+</body>
+</html>
+
+

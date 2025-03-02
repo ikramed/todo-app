@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <style>
+        
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px); 
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); 
+        }
+
+        .btn {
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #2d6bf0; 
+            transform: translateY(-3px);
+        }
+
+       
+        .rounded-card {
+            border-radius: 15px;
+        }
+
+        .slanted {
+            background: linear-gradient(45deg, #0066cc, #00bfff);
+            -webkit-background-clip: text;
+            color: transparent;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-black flex">
+  
+    <div id="sidebar" class="w-16 bg-blue-600 text-white p-6 transition-all duration-300 ease-in-out fixed h-full hover:w-64 md:w-64">
+        
+        <div class="flex justify-center items-center mb-6 md:hidden">
+            <span class="fas fa-bars text-white text-2xl cursor-pointer" onclick="toggleSidebar()"></span>
+        </div>
+
+       
+        <div class="space-y-4">
+            <ul class="hidden md:block">
+                <li><a href="#" class="block py-2 px-4 text-gray-200 hover:bg-blue-500 rounded-md">Home</a></li>
+                <li><a href="profile.html" class="block py-2 px-4 text-gray-200 hover:bg-blue-500 rounded-md">Profile</a></li>
+                <li><a href="setting.html" class="block py-2 px-4 text-gray-200 hover:bg-blue-500 rounded-md">Settings</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="flex-1 p-8 ml-16 md:ml-64 bg-white">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-xl font-semibold">Today: <span id="currentDate"></span></h2>
+            <button id="notificationIcon" class="btn w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center">
+                <i class="fas fa-bell"></i> 
+            </button>
+        </div>
+
+        <div class="bg-gray-200 p-4 rounded-md mb-8 text-center">
+            <h3 class="slanted text-3xl">Let's make a habit together!</h3>
+        </div>
+
+       
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+           
+            <a href="creatbok.html" class="card rounded-card bg-white shadow-lg p-6">
+                <h4 class="font-semibold">Create Detail Booking</h4>
+                <div class="h-2 bg-blue-600 mt-4 w-3/5 rounded-full"></div>
+                <p class="mt-2 text-sm text-gray-500">60% complete</p>
+            </a>
+
+            <a href="profile.html" class="card rounded-card bg-white shadow-lg p-6">
+                <h4 class="font-semibold">Update Profile</h4>
+                <div class="h-2 bg-green-600 mt-4 w-1/2 rounded-full"></div>
+                <p class="mt-2 text-sm text-gray-500">50% complete</p>
+            </a>
+
+          
+            <a href="mytasks.html" class="card rounded-card bg-white shadow-lg p-6">
+                <h4 class="font-semibold">Review Tasks</h4>
+                <div class="h-2 bg-red-600 mt-4 w-2/3 rounded-full"></div>
+                <p class="mt-2 text-sm text-gray-500">80% complete</p>
+            </a>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const currentDateElement = document.getElementById("currentDate");
+
+            if (currentDateElement) {
+                const currentDate = new Date();
+                const options = {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                };
+                currentDateElement.textContent = currentDate.toLocaleDateString('en-GB', options);
+            }
+        });
+    </script>
+
+</body>
+</html>
