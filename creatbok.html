@@ -39,6 +39,8 @@
     </div>
 
     <script>
+        let editIndex = null; 
+
         document.addEventListener("DOMContentLoaded", function () {
             loadBookings();
         });
@@ -50,11 +52,18 @@
 
             if (title && description) {
                 let bookings = JSON.parse(localStorage.getItem("userBookings")) || [];
-                const newBooking = { title, description };
-                bookings.push(newBooking);
+                
+                if (editIndex !== null) {
+                    bookings[editIndex] = { title, description };
+                    editIndex = null;
+                } else {
+                    bookings.push({ title, description });
+                }
+
                 localStorage.setItem("userBookings", JSON.stringify(bookings));
-                displayBooking(newBooking);
                 document.getElementById("bookingForm").reset();
+                document.getElementById("bookingList").innerHTML = '';
+                loadBookings();
             } else {
                 alert("Please fill in all fields.");
             }
@@ -62,38 +71,60 @@
 
         function loadBookings() {
             let bookings = JSON.parse(localStorage.getItem("userBookings")) || [];
-            bookings.forEach(displayBooking);
+            bookings.forEach((booking, index) => displayBooking(booking, index));
         }
 
-        function displayBooking(booking) {
+        function displayBooking(booking, index) {
             const bookingList = document.getElementById("bookingList");
             const bookingItem = document.createElement("div");
-            bookingItem.classList.add("bg-gray-200", "p-4", "rounded-md", "mb-2");
+            bookingItem.classList.add("bg-gray-200", "p-4", "rounded-md", "mb-2", "flex", "justify-between", "items-center");
 
-            
-            const deleteButton = document.createElement("button");
-            deleteButton.textContent = "Delete";
-            deleteButton.classList.add("bg-red-500", "text-white", "px-2", "py-1", "rounded-md", "ml-4", "hover:bg-red-600");
-            deleteButton.addEventListener("click", function () {
-                deleteBooking(booking);
+            const bookingContent = document.createElement("div");
+            bookingContent.innerHTML = `<h3 class='font-semibold'>${booking.title}</h3><p>${booking.description}</p>`;
+
+            // **زر Edit**
+            const editButton = document.createElement("button");
+            editButton.textContent = "Edit";
+            editButton.classList.add("bg-yellow-500", "text-white", "px-2", "py-1", "rounded-md", "ml-2", "hover:bg-yellow-600");
+            editButton.addEventListener("click", function () {
+                editBooking(index);
             });
 
-            bookingItem.innerHTML = `<h3 class='font-semibold'>${booking.title}</h3><p>${booking.description}</p>`;
-            bookingItem.appendChild(deleteButton);
+            // **زر Delete**
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.classList.add("bg-red-500", "text-white", "px-2", "py-1", "rounded-md", "ml-2", "hover:bg-red-600");
+            deleteButton.addEventListener("click", function () {
+                deleteBooking(index);
+            });
+
+            const buttonGroup = document.createElement("div");
+            buttonGroup.appendChild(editButton);
+            buttonGroup.appendChild(deleteButton);
+
+            bookingItem.appendChild(bookingContent);
+            bookingItem.appendChild(buttonGroup);
             bookingList.appendChild(bookingItem);
         }
 
-        function deleteBooking(booking) {
+        function editBooking(index) {
             let bookings = JSON.parse(localStorage.getItem("userBookings")) || [];
-            bookings = bookings.filter(b => b.title !== booking.title || b.description !== booking.description);
+            const booking = bookings[index];
+
+            document.getElementById("bookingTitle").value = booking.title;
+            document.getElementById("bookingDescription").value = booking.description;
+
+            editIndex = index; 
+        }
+
+        function deleteBooking(index) {
+            let bookings = JSON.parse(localStorage.getItem("userBookings")) || [];
+            bookings.splice(index, 1);
             localStorage.setItem("userBookings", JSON.stringify(bookings));
 
-        
             document.getElementById("bookingList").innerHTML = '';
             loadBookings();
         }
     </script>
 </body>
 </html>
-
-
