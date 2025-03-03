@@ -117,8 +117,8 @@
     <div class="flex-1 p-8 ml-16 md:ml-64 bg-white">
         <div class="flex justify-between items-center mb-8">
             <h2 class="text-xl font-semibold">Today: <span id="currentDate"></span></h2>
-            <button id="notificationIcon" class="btn w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center">
-                <i class="fas fa-bell"></i> 
+            <button id="notificationIcon" class="btn w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center" onclick="window.location.href='chats.html'">
+                <i class="fas fa-comments"></i> 
             </button>
         </div>
 
@@ -154,6 +154,7 @@
     </div>
 
     <script>
+        
         document.addEventListener("DOMContentLoaded", function () {
             const currentDateElement = document.getElementById("currentDate");
 
@@ -168,6 +169,9 @@
                 currentDateElement.textContent = currentDate.toLocaleDateString('en-GB', options);
             }
         });
+        document.getElementById("chatIcon").addEventListener("click", function () {
+        window.location.href = "chats.html";  
+    });
     </script>
 
 </body>
