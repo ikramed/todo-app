@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
-   
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -12,42 +11,85 @@
 
     <div id="profilePage" class="flex-1 p-4 ml-16 md:ml-6">
         <div class="flex justify-between items-center mb-9">
-            <h2 class="text-xl font-semibold">Profile</h2>
+            <h2 class="text-xl font-semibold" id="profileTitle"></h2>
            
-        <button onclick="window.location.href='dashboard.html'" class="absolute top-1 left-5 bg-gray-200 p-2 rounded-full shadow-md hover:bg-bleu-300">
-            ⬅ </button>
-            <button onclick="window.location.href='update.html'" class="bg-blue-500 text-white px-6 py-2 rounded-md">Edit</button>
+            <button onclick="window.location.href='dashboard.html'" class="absolute top-1 left-5 bg-gray-200 p-2 rounded-full shadow-md hover:bg-bleu-300">
+                ⬅ </button>
+            <button onclick="window.location.href='update.html'" class="bg-blue-500 text-white px-6 py-2 rounded-md" id="editButton"></button>
         </div>
 
-       
         <div class="bg-gray-200 p-6 rounded-md text-center">
             <img id="userProfilePic" src="download (3).png" alt="" class="w-32 h-32 rounded-full mx-auto mb-4">
-           
-            <p><strong>Name:</strong> <span id="userName">-</span></p>
-            <p><strong>Username:</strong> <span id="userUsername">-</span></p>
+            <p><strong id="nameLabel"></strong> <span id="userName">-</span></p>
+            <p><strong id="usernameLabel"></strong> <span id="userUsername">-</span></p>
         </div>
+
         <div class="mt-6">
-            <button onclick="window.location.href='project.html'" class="w-full mb-3 bg-purple-600 text-white py-2 rounded-md hover:bg-green-600">My Projects</button>
-            <button onclick="window.location.href='setting.html'" class="w-full mb-3 bg-purple-500 text-white py-2 rounded-md hover:bg-yellow-600">Settings</button>
-            <button onclick="window.location.href='jointeam.html'" class="w-full mb-3 bg-purple-400 text-white py-2 rounded-md hover:bg-purple-600">Join My Team</button>
-            <button onclick="window.location.href='mytasks.html'" class="w-full bg-purple-300 text-white py-2 rounded-md hover:bg-red-600">My Tasks</button>
+            <button onclick="window.location.href='project.html'" class="w-full mb-3 bg-purple-600 text-white py-2 rounded-md hover:bg-green-600" id="myProjectsButton"></button>
+            <button onclick="window.location.href='setting.html'" class="w-full mb-3 bg-purple-500 text-white py-2 rounded-md hover:bg-yellow-600" id="settingsButton"></button>
+            <button onclick="window.location.href='jointeam.html'" class="w-full mb-3 bg-purple-400 text-white py-2 rounded-md hover:bg-purple-600" id="joinTeamButton"></button>
+            <button onclick="window.location.href='mytasks.html'" class="w-full bg-purple-300 text-white py-2 rounded-md hover:bg-red-600" id="myTasksButton"></button>
         </div>
     </div>
-    <script defer src="profile.js"> <!-- ملف السكريبت -->
-    document.addEventListener("DOMContentLoaded", function () {
+
+    <script>
+        const languages = {
+            en: {
+                profileTitle: "Profile",
+                editButton: "Edit",
+                nameLabel: "Name:",
+                usernameLabel: "Username:",
+                myProjectsButton: "My Projects",
+                settingsButton: "Settings",
+                joinTeamButton: "Join My Team",
+                myTasksButton: "My Tasks"
+            },
+            fr: {
+                profileTitle: "Profil",
+                editButton: "Modifier",
+                nameLabel: "Nom:",
+                usernameLabel: "Nom d'utilisateur:",
+                myProjectsButton: "Mes projets",
+                settingsButton: "Paramètres",
+                joinTeamButton: "Rejoindre mon équipe",
+                myTasksButton: "Mes tâches"
+            },
+            ar: {
+                profileTitle: "الملف الشخصي",
+                editButton: "تعديل",
+                nameLabel: "الاسم:",
+                usernameLabel: "اسم المستخدم:",
+                myProjectsButton: "مشاريعي",
+                settingsButton: "الإعدادات",
+                joinTeamButton: "انضم إلى فريقي",
+                myTasksButton: "مهامي"
+            }
+        };
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const currentLang = localStorage.getItem("language") || 'en';
+
+            document.getElementById("profileTitle").textContent = languages[currentLang].profileTitle;
+            document.getElementById("editButton").textContent = languages[currentLang].editButton;
+            document.getElementById("nameLabel").textContent = languages[currentLang].nameLabel;
+            document.getElementById("usernameLabel").textContent = languages[currentLang].usernameLabel;
+            document.getElementById("myProjectsButton").textContent = languages[currentLang].myProjectsButton;
+            document.getElementById("settingsButton").textContent = languages[currentLang].settingsButton;
+            document.getElementById("joinTeamButton").textContent = languages[currentLang].joinTeamButton;
+            document.getElementById("myTasksButton").textContent = languages[currentLang].myTasksButton;
+
+            const userName = localStorage.getItem("userName") || "-";
+            const userUsername = localStorage.getItem("userUsername") || "-";
+            const userProfilePic = localStorage.getItem("userProfilePic") || "default.jpg";
         
-        const userName = localStorage.getItem("userName") || "-";
-        const userUsername = localStorage.getItem("userUsername") || "-";
-        const userProfilePic = localStorage.getItem("userProfilePic") || "default.jpg";
-    
-        const nameElement = document.getElementById("userName");
-        const usernameElement = document.getElementById("userUsername");
-        const profilePicElement = document.getElementById("userProfilePic");
-    
-        if (nameElement) nameElement.textContent = userName;
-        if (usernameElement) usernameElement.textContent = userUsername;
-        if (profilePicElement) profilePicElement.src = userProfilePic;
-    });
-</script>
+            const nameElement = document.getElementById("userName");
+            const usernameElement = document.getElementById("userUsername");
+            const profilePicElement = document.getElementById("userProfilePic");
+        
+            if (nameElement) nameElement.textContent = userName;
+            if (usernameElement) usernameElement.textContent = userUsername;
+            if (profilePicElement) profilePicElement.src = userProfilePic;
+        });
+    </script>
 </body>
 </html>
