@@ -63,7 +63,6 @@
         transform: scale(1.05);
     }
 
-    
     .background-circle {
         position: absolute;
         width: 150px;
@@ -71,24 +70,6 @@
         background-color: rgba(255, 255, 255, 0.2);
         border-radius: 50%;
         animation: moveBackground 6s infinite ease-in-out;
-    }
-
-    .background-circle:nth-child(1) {
-        top: 80%;
-        left: -70px;
-        animation-duration: 6s;
-    }
-
-    .background-circle:nth-child(2) {
-        top: 60%;
-        right: 100px;
-        animation-duration: 9s;
-    }
-
-    .background-circle:nth-child(3) {
-        bottom: 80%;
-        left: 50%;
-        animation-duration: 8s;
     }
 
     @keyframes moveBackground {
@@ -101,49 +82,31 @@
         100% {
             transform: translateX(0) translateY(0);
         }
-    } 
-      .back-arrow {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 24px;
-            color: #fff;
-            text-decoration: none;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 50%;
-            transition: background-color 0.3s;
-        }
-
-        .back-arrow:hover {
-            background-color: #396db7;
-        }
-
+    }
 </style>
 
 <body>
-    <a href="security.html" class="back-arrow">
-        <span class="material-icons">◀</span>
-    </a>
+    <a href="security.html" class="back-arrow">◀</a>
+
     <div class="background-circle"></div>
     <div class="background-circle"></div>
     <div class="background-circle"></div>
 
     <div class="setting-container">
-        <h2 class="setting-header">Change Password</h2>
+        <h2 class="setting-header" id="settingHeader">Change Password</h2>
 
         <div class="setting-item">
-            <label for="oldPassword">Old Password</label>
+            <label for="oldPassword" id="oldPasswordLabel">Old Password</label>
             <input type="password" id="oldPassword" placeholder="Enter old password">
         </div>
 
         <div class="setting-item">
-            <label for="newPassword">New Password</label>
+            <label for="newPassword" id="newPasswordLabel">New Password</label>
             <input type="password" id="newPassword" placeholder="Enter new password">
         </div>
 
         <div class="setting-item">
-            <label for="confirmPassword">Confirm New Password</label>
+            <label for="confirmPassword" id="confirmPasswordLabel">Confirm New Password</label>
             <input type="password" id="confirmPassword" placeholder="Confirm new password">
         </div>
 
@@ -153,28 +116,66 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const saveBtn = document.getElementById("saveBtn");
+        const languages = {
+            en: {
+                settingHeader: "Change Password",
+                oldPasswordLabel: "Old Password",
+                newPasswordLabel: "New Password",
+                confirmPasswordLabel: "Confirm New Password",
+                saveBtnText: "Save Changes",
+                alertEmptyFields: "Please fill in all fields.",
+                alertPasswordMismatch: "New password and confirm password do not match.",
+                alertSuccess: "Password changed successfully!"
+            },
+            fr: {
+                settingHeader: "Changer le mot de passe",
+                oldPasswordLabel: "Ancien mot de passe",
+                newPasswordLabel: "Nouveau mot de passe",
+                confirmPasswordLabel: "Confirmer le nouveau mot de passe",
+                saveBtnText: "Sauvegarder les changements",
+                alertEmptyFields: "Veuillez remplir tous les champs.",
+                alertPasswordMismatch: "Le nouveau mot de passe et la confirmation ne correspondent pas.",
+                alertSuccess: "Mot de passe changé avec succès!"
+            },
+            ar: {
+                settingHeader: "تغيير كلمة المرور",
+                oldPasswordLabel: "كلمة المرور القديمة",
+                newPasswordLabel: "كلمة المرور الجديدة",
+                confirmPasswordLabel: "تأكيد كلمة المرور الجديدة",
+                saveBtnText: "حفظ التغييرات",
+                alertEmptyFields: "يرجى ملء جميع الحقول.",
+                alertPasswordMismatch: "كلمة المرور الجديدة وتأكيد كلمة المرور لا تتطابق.",
+                alertSuccess: "تم تغيير كلمة المرور بنجاح!"
+            }
+        };
 
-            saveBtn.addEventListener("click", function () {
-                const oldPassword = document.getElementById("oldPassword").value;
-                const newPassword = document.getElementById("newPassword").value;
-                const confirmPassword = document.getElementById("confirmPassword").value;
+        // Retrieve language setting from localStorage
+        let currentLang = localStorage.getItem("language") || 'en';
 
-               
-                if (!oldPassword || !newPassword || !confirmPassword) {
-                    alert("Please fill in all fields.");
-                    return;
-                }
+        // Update text content based on language
+        document.getElementById("settingHeader").textContent = languages[currentLang].settingHeader;
+        document.getElementById("oldPasswordLabel").textContent = languages[currentLang].oldPasswordLabel;
+        document.getElementById("newPasswordLabel").textContent = languages[currentLang].newPasswordLabel;
+        document.getElementById("confirmPasswordLabel").textContent = languages[currentLang].confirmPasswordLabel;
+        document.getElementById("saveBtn").textContent = languages[currentLang].saveBtnText;
 
-                if (newPassword !== confirmPassword) {
-                    alert("New password and confirm password do not match.");
-                    return;
-                }
+        document.getElementById("saveBtn").addEventListener("click", function () {
+            const oldPassword = document.getElementById("oldPassword").value;
+            const newPassword = document.getElementById("newPassword").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
 
-                alert("Password changed successfully!");
-                window.location.href = "security.html";
-            });
+            if (!oldPassword || !newPassword || !confirmPassword) {
+                alert(languages[currentLang].alertEmptyFields);
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                alert(languages[currentLang].alertPasswordMismatch);
+                return;
+            }
+
+            alert(languages[currentLang].alertSuccess);
+            window.location.href = "security.html";
         });
     </script>
 </body>
