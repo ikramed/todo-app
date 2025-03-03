@@ -40,16 +40,6 @@
         position: relative;
     }
 
-    .setting-item::before {
-        content: "";
-        position: absolute;
-        top: -10px;
-        left: 50%;
-        width: 20px;
-        height: 20px;
-       
-    }
-
     .setting-item button {
         padding: 12px 20px;
         background-color: #007bff;
@@ -83,133 +73,129 @@
         font-weight: 500;
     }
 
-    .background-circle {
+    .back-arrow {
         position: absolute;
-        width: 150px;
-        height: 150px;
-        background-color: rgba(255, 255, 255, 0.2);
+        top: 20px;
+        left: 20px;
+        font-size: 24px;
+        color: #fff;
+        text-decoration: none;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 10px;
         border-radius: 50%;
-        animation: moveBackground 6s infinite ease-in-out;
+        transition: background-color 0.3s;
     }
 
-    .background-circle:nth-child(1) {
-        top: 30%;
-        left: -70px;
-        animation-duration: 6s;
+    .back-arrow:hover {
+        background-color: #396db7;
     }
-
-    .background-circle:nth-child(2) {
-        top: 60%;
-        right: -100px;
-        animation-duration: 9s;
-    }
-
-    .background-circle:nth-child(3) {
-        bottom: 20%;
-        left: 50%;
-        animation-duration: 8s;
-    }
-
-    @keyframes moveBackground {
-        0% {
-            transform: translateX(0) translateY(0);
-        }
-        50% {
-            transform: translateX(30px) translateY(30px);
-        }
-        100% {
-            transform: translateX(0) translateY(0);
-        }
-    }
-      /* Back Arrow Style */
-      .back-arrow {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 24px;
-            color: #fff;
-            text-decoration: none;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 50%;
-            transition: background-color 0.3s;
-        }
-
-        .back-arrow:hover {
-            background-color: #396db7;
-        }
 </style>
 
 <body>
-    <a href="setting.html" class="back-arrow">
-        <span class="material-icons">◀</span>
-    </a>
-
-    <div class="background-circle"></div>
-    <div class="background-circle"></div>
-    <div class="background-circle"></div>
+    <a href="setting.html" class="back-arrow">◀</a>
 
     <div class="setting-container">
-        <h2 class="setting-header">Security Settings</h2>
-
-        <!-- Change Password -->
+        <h2 id="setting-header" class="setting-header"></h2>
         <div class="setting-item">
-            <span>Change Password</span>
-            <button id="changePasswordBtn">Change</button>
+            <span id="change-password-text"></span>
+            <button id="changePasswordBtn"></button>
         </div>
-
-        <!-- Two-factor Authentication -->
         <div class="setting-item">
-            <span>Two-Factor Authentication</span>
-            <button id="twoFactorBtn" class="toggle-btn">Activate</button>
+            <span id="two-factor-text"></span>
+            <button id="twoFactorBtn" class="toggle-btn"></button>
         </div>
-
-        <!-- Security Logs -->
         <div class="setting-item">
-            <span>Security Logs</span>
-            <button id="securityLogsBtn">View Logs</button>
+            <span id="security-logs-text"></span>
+            <button id="securityLogsBtn"></button>
         </div>
-
-        <!-- Logout -->
         <div class="setting-item">
-            <span>Logout</span>
-            <button id="logoutBtn">Logout</button>
+            <span id="logout-text"></span>
+            <button id="logoutBtn"></button>
         </div>
     </div>
 
     <script>
-         
+        const translations = {
+            en: {
+                header: "Security Settings",
+                changePassword: "Change Password",
+                changeButton: "Change",
+                twoFactor: "Two-Factor Authentication",
+                activate: "Activate",
+                deactivate: "Deactivate",
+                securityLogs: "Security Logs",
+                viewLogs: "View Logs",
+                logout: "Logout",
+                logoutButton: "Logout"
+            },
+            fr: {
+                header: "Paramètres de sécurité",
+                changePassword: "Changer le mot de passe",
+                changeButton: "Changer",
+                twoFactor: "Authentification à deux facteurs",
+                activate: "Activer",
+                deactivate: "Désactiver",
+                securityLogs: "Journaux de sécurité",
+                viewLogs: "Voir les journaux",
+                logout: "Se déconnecter",
+                logoutButton: "Se déconnecter"
+            },
+            ar: {
+                header: "إعدادات الأمان",
+                changePassword: "تغيير كلمة المرور",
+                changeButton: "تغيير",
+                twoFactor: "المصادقة الثنائية",
+                activate: "تفعيل",
+                deactivate: "إلغاء التفعيل",
+                securityLogs: "سجلات الأمان",
+                viewLogs: "عرض السجلات",
+                logout: "تسجيل الخروج",
+                logoutButton: "تسجيل الخروج"
+            }
+        };
+
+        function updateLanguage() {
+            let lang = localStorage.getItem("language") || "en";
+            document.documentElement.lang = lang;
+
+            document.getElementById("setting-header").innerText = translations[lang].header;
+            document.getElementById("change-password-text").innerText = translations[lang].changePassword;
+            document.getElementById("changePasswordBtn").innerText = translations[lang].changeButton;
+            document.getElementById("two-factor-text").innerText = translations[lang].twoFactor;
+            document.getElementById("twoFactorBtn").innerText = translations[lang].activate;
+            document.getElementById("security-logs-text").innerText = translations[lang].securityLogs;
+            document.getElementById("securityLogsBtn").innerText = translations[lang].viewLogs;
+            document.getElementById("logout-text").innerText = translations[lang].logout;
+            document.getElementById("logoutBtn").innerText = translations[lang].logoutButton;
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
+            updateLanguage();
+
             const changePasswordBtn = document.getElementById("changePasswordBtn");
             const twoFactorBtn = document.getElementById("twoFactorBtn");
             const securityLogsBtn = document.getElementById("securityLogsBtn");
             const logoutBtn = document.getElementById("logoutBtn");
 
-           
-            changePasswordBtn.addEventListener("click", function () {
-              
-                window.location.href = "changepass.html";  
-            });
-
             
-            twoFactorBtn.addEventListener("click", function () {
-                const isActive = twoFactorBtn.textContent === "Activate";
-                twoFactorBtn.textContent = isActive ? "Deactivate" : "Activate";
-                twoFactorBtn.classList.toggle("deactivate", !isActive);
-                
+            changePasswordBtn.addEventListener("click", function () {
+                window.location.href = "changepass.html";
             });
 
-          
             securityLogsBtn.addEventListener("click", function () {
-               
-                window.location.href = "seculogs.html";  
+                window.location.href = "seculogs.html";
             });
 
-            // Logout
             logoutBtn.addEventListener("click", function () {
                 alert("Logging out...");
-                
-                window.location.href = "login.html";  
+                window.location.href = "login.html";
+            });
+
+            twoFactorBtn.addEventListener("click", function () {
+                let lang = localStorage.getItem("language") || "en";
+                const isActive = twoFactorBtn.textContent === translations[lang].activate;
+                twoFactorBtn.textContent = isActive ? translations[lang].deactivate : translations[lang].activate;
+                twoFactorBtn.classList.toggle("deactivate", !isActive);
             });
         });
     </script>
