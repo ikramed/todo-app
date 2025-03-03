@@ -77,7 +77,6 @@
         background-color: #218838;
     }
 
-   
     .background-circle {
         position: absolute;
         width: 150px;
@@ -124,35 +123,79 @@
     <div class="background-circle"></div>
 
     <div class="logs-container">
-        <h2 class="logs-header">Security Logs</h2>
+        <h2 class="logs-header" id="logsHeader">Security Logs</h2>
 
         <div class="logs-item">
-            <span>Login attempt at 2025-03-01 10:00 AM</span>
-            <button>View</button>
+            <span id="log1">Login attempt at 2025-03-01 10:00 AM</span>
+            <button id="viewLog1">View</button>
         </div>
 
         <div class="logs-item">
-            <span>Password change at 2025-03-01 11:00 AM</span>
-            <button>View</button>
+            <span id="log2">Password change at 2025-03-01 11:00 AM</span>
+            <button id="viewLog2">View</button>
         </div>
 
         <div class="logs-item">
-            <span>IP address change at 2025-03-01 12:00 PM</span>
-            <button>View</button>
+            <span id="log3">IP address change at 2025-03-01 12:00 PM</span>
+            <button id="viewLog3">View</button>
         </div>
 
-       
-        <button class="back-button" onclick="window.location.href='security.html';">Back to Settings</button>
+        <button class="back-button" id="backBtn">Back to Settings</button>
     </div>
 
     <script>
+        const languages = {
+            en: {
+                logsHeader: "Security Logs",
+                log1: "Login attempt at 2025-03-01 10:00 AM",
+                log2: "Password change at 2025-03-01 11:00 AM",
+                log3: "IP address change at 2025-03-01 12:00 PM",
+                viewBtnText: "View",
+                backBtnText: "Back to Settings",
+                alertMessage: "Viewing log details..."
+            },
+            fr: {
+                logsHeader: "Journaux de sécurité",
+                log1: "Tentative de connexion le 2025-03-01 à 10h00",
+                log2: "Changement de mot de passe le 2025-03-01 à 11h00",
+                log3: "Changement d'adresse IP le 2025-03-01 à 12h00",
+                viewBtnText: "Voir",
+                backBtnText: "Retour aux paramètres",
+                alertMessage: "Affichage des détails du journal..."
+            },
+            ar: {
+                logsHeader: "سجلات الأمان",
+                log1: "محاولة تسجيل دخول في 2025-03-01 الساعة 10:00 صباحًا",
+                log2: "تغيير كلمة المرور في 2025-03-01 الساعة 11:00 صباحًا",
+                log3: "تغيير عنوان الـ IP في 2025-03-01 الساعة 12:00 مساءً",
+                viewBtnText: "عرض",
+                backBtnText: "العودة إلى الإعدادات",
+                alertMessage: "عرض تفاصيل السجل..."
+            }
+        };
+
+        let currentLang = localStorage.getItem("language") || 'en';
+
+        document.getElementById("logsHeader").textContent = languages[currentLang].logsHeader;
+        document.getElementById("log1").textContent = languages[currentLang].log1;
+        document.getElementById("log2").textContent = languages[currentLang].log2;
+        document.getElementById("log3").textContent = languages[currentLang].log3;
+        document.getElementById("viewLog1").textContent = languages[currentLang].viewBtnText;
+        document.getElementById("viewLog2").textContent = languages[currentLang].viewBtnText;
+        document.getElementById("viewLog3").textContent = languages[currentLang].viewBtnText;
+        document.getElementById("backBtn").textContent = languages[currentLang].backBtnText;
+
         document.addEventListener("DOMContentLoaded", function () {
             const viewButtons = document.querySelectorAll(".logs-item button");
 
             viewButtons.forEach(function (button) {
                 button.addEventListener("click", function () {
-                    alert("Viewing log details...");
+                    alert(languages[currentLang].alertMessage);
                 });
+            });
+
+            document.getElementById("backBtn").addEventListener("click", function() {
+                window.location.href = "security.html";
             });
         });
     </script>
