@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Profile</title>
-    <script defer src="profile.js"></script> 
+    <script defer src="profile.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
     <style>
-        
-          .back-arrow {
+        .back-arrow {
             position: absolute;
             top: 20px;
             left: 20px;
@@ -32,29 +31,59 @@
         <span class="material-icons">◀</span>
     </a>
     <div id="editPage" class="flex-1 p-8 ml-16 md:ml-64">
-        <h2 class="text-xl font-semibold text-center">Update Profile</h2><br>
+        <h2 class="text-xl font-semibold text-center" id="updateProfileTitle"></h2><br>
 
-        
         <div class="bg-gray-200 p-6 rounded-md">
-            <label>Name:</label>
+            <label id="nameLabel"></label>
             <input type="text" id="userNameInput" class="w-full p-2 mt-2 border rounded-md" placeholder="Enter your name">
 
-            <label>Username:</label>
+            <label id="usernameLabel"></label>
             <input type="text" id="userUsernameInput" class="w-full p-2 mt-2 border rounded-md" placeholder="Enter your username">
 
             <div class="relative">
                 <br>
                 <img id="previewImage" src="download (3).png" alt="" class="w-32 h-32 rounded-full object-cover">
-                <button id="removePicBtn" class="absolute right-40 bg-red-300 text-white p-1 ">
+                <button id="removePicBtn" class="absolute right-40 bg-red-300 text-white p-1">
                     🚮
                 </button>
             </div>
             <br>
             <input type="file" id="userProfilePicInput">
             
-            <button id="saveBtn" class="bg-blue-500 text-white px-6 py-2 rounded-md w-full mt-4">Save</button>
+            <button id="saveBtn" class="bg-blue-500 text-white px-6 py-2 rounded-md w-full mt-4"></button>
         </div>
     </div>
 
+    <script>
+        const languages = {
+            en: {
+                updateProfileTitle: "Update Profile",
+                nameLabel: "Name:",
+                usernameLabel: "Username:",
+                saveBtn: "Save"
+            },
+            fr: {
+                updateProfileTitle: "Mettre à jour le profil",
+                nameLabel: "Nom:",
+                usernameLabel: "Nom d'utilisateur:",
+                saveBtn: "Enregistrer"
+            },
+            ar: {
+                updateProfileTitle: "تحديث الملف الشخصي",
+                nameLabel: "الاسم:",
+                usernameLabel: "اسم المستخدم:",
+                saveBtn: "حفظ"
+            }
+        };
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const currentLang = localStorage.getItem("language") || 'en';
+
+            document.getElementById("updateProfileTitle").textContent = languages[currentLang].updateProfileTitle;
+            document.getElementById("nameLabel").textContent = languages[currentLang].nameLabel;
+            document.getElementById("usernameLabel").textContent = languages[currentLang].usernameLabel;
+            document.getElementById("saveBtn").textContent = languages[currentLang].saveBtn;
+        });
+    </script>
 </body>
 </html>
