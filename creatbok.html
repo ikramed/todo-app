@@ -29,11 +29,11 @@
     <button onclick="window.location.href='dashboard.html'" class="bg-gray-200 p-2 rounded-full shadow-md hover:bg-blue-300 mb-4">⬅</button>
     
     <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg slide-in">
-        <h2 class="text-2xl font-semibold mb-4">Create Detail Booking</h2>
+        <h2 id="bookingTitle" class="text-2xl font-semibold mb-4">Create Detail Booking</h2>
         <form id="bookingForm" class="space-y-4">
-            <input type="text" id="bookingTitle" placeholder="Booking Title" class="w-full p-2 border rounded-md">
+            <input type="text" id="bookingTitleInput" placeholder="Booking Title" class="w-full p-2 border rounded-md">
             <textarea id="bookingDescription" placeholder="Description" class="w-full p-2 border rounded-md"></textarea>
-            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-green-600">Save Booking</button>
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-green-600" id="saveButton">Save Booking</button>
         </form>
         <div id="bookingList" class="mt-6"></div>
     </div>
@@ -41,13 +41,51 @@
     <script>
         let editIndex = null; 
 
+       
         document.addEventListener("DOMContentLoaded", function () {
+            loadLanguage();
             loadBookings();
         });
 
+        function loadLanguage() {
+            let language = localStorage.getItem("language") || 'en';
+
+            const languageTexts = {
+                en: {
+                    bookingTitle: "Create Detail Booking",
+                    placeholderTitle: "Booking Title",
+                    placeholderDescription: "Description",
+                    saveButton: "Save Booking",
+                    alert: "Please fill in all fields."
+                },
+                fr: {
+                    bookingTitle: "Créer une réservation détaillée",
+                    placeholderTitle: "Titre de la réservation",
+                    placeholderDescription: "Description",
+                    saveButton: "Enregistrer la réservation",
+                    alert: "Veuillez remplir tous les champs."
+                },
+                ar: {
+                    bookingTitle: "إنشاء تفاصيل الحجز",
+                    placeholderTitle: "عنوان الحجز",
+                    placeholderDescription: "الوصف",
+                    saveButton: "حفظ الحجز",
+                    alert: "يرجى ملء جميع الحقول."
+                }
+            };
+
+          
+            const texts = languageTexts[language];
+
+            document.getElementById("bookingTitle").textContent = texts.bookingTitle;
+            document.getElementById("bookingTitleInput").placeholder = texts.placeholderTitle;
+            document.getElementById("bookingDescription").placeholder = texts.placeholderDescription;
+            document.getElementById("saveButton").textContent = texts.saveButton;
+        }
+
         document.getElementById("bookingForm").addEventListener("submit", function (event) {
             event.preventDefault();
-            const title = document.getElementById("bookingTitle").value;
+            const title = document.getElementById("bookingTitleInput").value;
             const description = document.getElementById("bookingDescription").value;
 
             if (title && description) {
@@ -65,7 +103,7 @@
                 document.getElementById("bookingList").innerHTML = '';
                 loadBookings();
             } else {
-                alert("Please fill in all fields.");
+                alert(getLanguageText('alert'));
             }
         });
 
@@ -82,7 +120,7 @@
             const bookingContent = document.createElement("div");
             bookingContent.innerHTML = `<h3 class='font-semibold'>${booking.title}</h3><p>${booking.description}</p>`;
 
-            // **زر Edit**
+           
             const editButton = document.createElement("button");
             editButton.textContent = "Edit";
             editButton.classList.add("bg-yellow-500", "text-white", "px-2", "py-1", "rounded-md", "ml-2", "hover:bg-yellow-600");
@@ -90,7 +128,7 @@
                 editBooking(index);
             });
 
-            // **زر Delete**
+            
             const deleteButton = document.createElement("button");
             deleteButton.textContent = "Delete";
             deleteButton.classList.add("bg-red-500", "text-white", "px-2", "py-1", "rounded-md", "ml-2", "hover:bg-red-600");
@@ -111,7 +149,7 @@
             let bookings = JSON.parse(localStorage.getItem("userBookings")) || [];
             const booking = bookings[index];
 
-            document.getElementById("bookingTitle").value = booking.title;
+            document.getElementById("bookingTitleInput").value = booking.title;
             document.getElementById("bookingDescription").value = booking.description;
 
             editIndex = index; 
@@ -124,6 +162,23 @@
 
             document.getElementById("bookingList").innerHTML = '';
             loadBookings();
+        }
+
+       
+        function getLanguageText(key) {
+            let language = localStorage.getItem("language") || 'en';
+            const languageTexts = {
+                en: {
+                    alert: "Please fill in all fields."
+                },
+                fr: {
+                    alert: "Veuillez remplir tous les champs."
+                },
+                ar: {
+                    alert: "يرجى ملء جميع الحقول."
+                }
+            };
+            return languageTexts[language][key];
         }
     </script>
 </body>
