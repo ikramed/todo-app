@@ -8,7 +8,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
     <style>
-      
         body {
             font-family: 'Arial', sans-serif;
             background: linear-gradient(45deg, #6a11cb, #2575fc);
@@ -43,7 +42,6 @@
             fill: rgb(217, 80, 80);
         }
 
-       
         .help-item {
             background-color: #333;
             border-radius: 8px;
@@ -52,7 +50,6 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-       
         .help-item span {
             font-size: 18px;
             font-weight: bold;
@@ -64,7 +61,6 @@
             margin-top: 10px;
         }
 
-       
         .background-circle {
             position: absolute;
             width: 150px;
@@ -76,19 +72,19 @@
 
         .background-circle:nth-child(1) {
             top: 30%;
-            left: -70px;
+            left: 40px;
             animation-duration: 6s;
         }
 
         .background-circle:nth-child(2) {
-            top: 60%;
-            right: -100px;
+            top: 20%;
+            right: 100px;
             animation-duration: 9s;
         }
 
         .background-circle:nth-child(3) {
-            bottom: 20%;
-            left: 50%;
+            bottom: 70%;
+            left: 20%;
             animation-duration: 8s;
         }
 
@@ -104,7 +100,6 @@
             }
         }
 
-       
         .help-container {
             max-width: 800px;
             margin: 40px auto;
@@ -114,7 +109,6 @@
 </head>
 <body>
 
-    
     <button class="back-button" onclick="goBack()">
       ◀
     </button>
@@ -124,38 +118,36 @@
     <div class="background-circle"></div>
 
     <div class="help-container">
-        <h2 class="text-center text-2xl font-semibold mb-5">Help Center</h2>
+        <h2 id="help-title" class="text-center text-2xl font-semibold mb-5">Help Center</h2>
 
-       
         <div class="help-item">
-            <span>How to Change Your Password</span>
-            <p>If you need to change your password, follow these simple steps:</p>
+            <span id="change-password-title">How to Change Your Password</span>
+            <p id="change-password-desc">If you need to change your password, follow these simple steps:</p>
             <ul>
-                <li>Go to your profile settings.</li>
-                <li>Click on the "Change Password" button.</li>
-                <li>Enter your old and new passwords.</li>
-                <li>Click "Save" to confirm your new password.</li>
+                <li id="change-password-step1">Go to your profile settings.</li>
+                <li id="change-password-step2">Click on the "Change Password" button.</li>
+                <li id="change-password-step3">Enter your old and new passwords.</li>
+                <li id="change-password-step4">Click "Save" to confirm your new password.</li>
             </ul>
         </div>
 
         <div class="help-item">
-            <span>How to Enable Notifications</span>
-            <p>To enable push notifications, please follow these steps:</p>
+            <span id="enable-notifications-title">How to Enable Notifications</span>
+            <p id="enable-notifications-desc">To enable push notifications, please follow these steps:</p>
             <ul>
-                <li>Go to your settings page.</li>
-                <li>Toggle the "Push Notifications" button to "Activate".</li>
-                <li>Make sure your browser allows notifications.</li>
+                <li id="enable-notifications-step1">Go to your settings page.</li>
+                <li id="enable-notifications-step2">Toggle the "Push Notifications" button to "Activate".</li>
+                <li id="enable-notifications-step3">Make sure your browser allows notifications.</li>
             </ul>
         </div>
 
-      
         <div class="help-item">
-            <span>Contact Support</span>
-            <p>If you have any further issues or questions, you can contact our support team:</p>
+            <span id="contact-support-title">Contact Support</span>
+            <p id="contact-support-desc">If you have any further issues or questions, you can contact our support team:</p>
             <ul>
-                <li>Email us at: devstrom@gmail.com</li>
-                <li>Call us at: +212 0643635980</li>
-                <li>Or chat with us directly on our website.</li>
+                <li id="contact-support-email">Email us at: devstrom@gmail.com</li>
+                <li id="contact-support-phone">Call us at: +212 0643635980</li>
+                <li id="contact-support-chat">Or chat with us directly on our website.</li>
             </ul>
         </div>
     </div>
@@ -163,6 +155,82 @@
     <script>
         function goBack() {
             window.location.href = "setting.html"; 
+        }
+
+        window.onload = () => {
+            const savedLanguage = localStorage.getItem('language') || 'en';
+            document.documentElement.lang = savedLanguage;
+            loadLanguage(savedLanguage);
+        };
+
+        function loadLanguage(language) {
+            const texts = {
+                en: {
+                    "help-title": "Help Center",
+                    "change-password-title": "How to Change Your Password",
+                    "change-password-desc": "If you need to change your password, follow these simple steps:",
+                    "change-password-step1": "Go to your profile settings.",
+                    "change-password-step2": "Click on the 'Change Password' button.",
+                    "change-password-step3": "Enter your old and new passwords.",
+                    "change-password-step4": "Click 'Save' to confirm your new password.",
+                    "enable-notifications-title": "How to Enable Notifications",
+                    "enable-notifications-desc": "To enable push notifications, please follow these steps:",
+                    "enable-notifications-step1": "Go to your settings page.",
+                    "enable-notifications-step2": "Toggle the 'Push Notifications' button to 'Activate'.",
+                    "enable-notifications-step3": "Make sure your browser allows notifications.",
+                    "contact-support-title": "Contact Support",
+                    "contact-support-desc": "If you have any further issues or questions, you can contact our support team:",
+                    "contact-support-email": "Email us at: devstrom@gmail.com",
+                    "contact-support-phone": "Call us at: +212 0643635980",
+                    "contact-support-chat": "Or chat with us directly on our website."
+                },
+                ar: {
+                    "help-title": "مركز المساعدة",
+                    "change-password-title": "كيفية تغيير كلمة المرور",
+                    "change-password-desc": "إذا كنت بحاجة إلى تغيير كلمة المرور، اتبع الخطوات البسيطة التالية:",
+                    "change-password-step1": "اذهب إلى إعدادات ملفك الشخصي.",
+                    "change-password-step2": "اضغط على زر 'تغيير كلمة المرور'.",
+                    "change-password-step3": "أدخل كلمة المرور القديمة والجديدة.",
+                    "change-password-step4": "اضغط على 'حفظ' لتأكيد كلمة المرور الجديدة.",
+                    "enable-notifications-title": "كيفية تمكين الإشعارات",
+                    "enable-notifications-desc": "لتفعيل الإشعارات، اتبع الخطوات التالية:",
+                    "enable-notifications-step1": "اذهب إلى صفحة الإعدادات.",
+                    "enable-notifications-step2": "حول زر 'الإشعارات' إلى 'تفعيل'.",
+                    "enable-notifications-step3": "تأكد من أن متصفحك يسمح بالإشعارات.",
+                    "contact-support-title": "اتصل بالدعم",
+                    "contact-support-desc": "إذا واجهت أي مشاكل أو كان لديك استفسارات، يمكنك الاتصال بفريق الدعم لدينا:",
+                    "contact-support-email": "راسلنا على: devstrom@gmail.com",
+                    "contact-support-phone": "اتصل بنا على: +212 0643635980",
+                    "contact-support-chat": "أو تواصل معنا عبر الدردشة المباشرة على موقعنا."
+                },
+                fr: {
+                    "help-title": "Centre d'Aide",
+                    "change-password-title": "Comment changer votre mot de passe",
+                    "change-password-desc": "Si vous devez changer votre mot de passe, suivez ces étapes simples :",
+                    "change-password-step1": "Allez dans les paramètres de votre profil.",
+                    "change-password-step2": "Cliquez sur le bouton 'Changer le mot de passe'.",
+                    "change-password-step3": "Entrez votre ancien et nouveau mot de passe.",
+                    "change-password-step4": "Cliquez sur 'Enregistrer' pour confirmer votre nouveau mot de passe.",
+                    "enable-notifications-title": "Comment activer les notifications",
+                    "enable-notifications-desc": "Pour activer les notifications push, suivez ces étapes :",
+                    "enable-notifications-step1": "Allez dans la page de paramètres.",
+                    "enable-notifications-step2": "Activez le bouton 'Notifications push'.",
+                    "enable-notifications-step3": "Assurez-vous que votre navigateur autorise les notifications.",
+                    "contact-support-title": "Contacter le support",
+                    "contact-support-desc": "Si vous avez des problèmes ou des questions, vous pouvez contacter notre équipe de support :",
+                    "contact-support-email": "Envoyez-nous un email à : devstrom@gmail.com",
+                    "contact-support-phone": "Appelez-nous au : +212 0643635980",
+                    "contact-support-chat": "Ou discutez avec nous directement sur notre site."
+                }
+            };
+
+            const elements = document.querySelectorAll('[id]');
+            elements.forEach(element => {
+                const textKey = element.id;
+                if (texts[language] && texts[language][textKey]) {
+                    element.innerText = texts[language][textKey];
+                }
+            });
         }
     </script>
 
