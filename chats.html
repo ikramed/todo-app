@@ -8,19 +8,15 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-gray-100">
- 
     <button onclick="window.location.href='dashboard.html'" class="absolute top-1 left-5 bg-gray-200 p-2 rounded-full shadow-md hover:bg-bleu-300">
         ⬅ </button>
+
     <div class="flex">
-       
         <div class="w-1/4 bg-white p-6 shadow-md">
-            <h2 class="text-2xl font-semibold mb-6">Members</h2>
-            <ul id="membersList">
-          
-            </ul>
+            <h2 class="text-2xl font-semibold mb-6" id="membersTitle">Members</h2>
+            <ul id="membersList"></ul>
         </div>
 
-        
         <div id="chatArea" class="flex-1 bg-gray-50 p-6 shadow-md">
             <h2 id="chatWith" class="text-xl font-semibold mb-6">Select a member to chat</h2>
             <div id="messagesContainer" class="h-72 bg-white p-4 overflow-auto rounded-lg"></div>
@@ -31,78 +27,89 @@
         </div>
     </div>
 
-<script  defer>
- 
+    <script defer>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Language settings
+            const language = localStorage.getItem('language') || 'en';
+            const translations = {
+                en: {
+                    members: 'Members',
+                    selectChat: 'Select a member to chat',
+                    placeholder: 'Type a message...',
+                    send: 'Send',
+                },
+                fr: {
+                    members: 'Membres',
+                    selectChat: 'Sélectionnez un membre pour discuter',
+                    placeholder: 'Tapez un message...',
+                    send: 'Envoyer',
+                },
+                ar: {
+                    members: 'الأعضاء',
+                    selectChat: 'اختر عضوًا للدردشة',
+                    placeholder: 'اكتب رسالة...',
+                    send: 'إرسال',
+                },
+            };
 
-document.addEventListener("DOMContentLoaded", function() {
-    const membersList = document.getElementById("membersList");
-    const chatArea = document.getElementById("chatArea");
-    const chatWith = document.getElementById("chatWith");
-    const messageInput = document.getElementById("messageInput");
-    const sendButton = chatArea.querySelector("button");
-    const messagesContainer = document.getElementById("messagesContainer");
-
-   
-    const membersWithRequests = JSON.parse(localStorage.getItem("sentRequests")) || [];
-
-  
-    membersWithRequests.forEach(member => {
-        const memberItem = document.createElement("li");
-        memberItem.classList.add("cursor-pointer", "py-2", "px-4", "hover:bg-gray-200", "rounded-md");
-        memberItem.textContent = member.name;
-        memberItem.dataset.id = member.id;
-        memberItem.addEventListener("click", function() {
-            openChatWithMember(member);
-        });
-        membersList.appendChild(memberItem);
-    });
-
-
-    function openChatWithMember(member) {
-        chatWith.textContent = `Chat with ${member.name}`;
-        messageInput.disabled = false;
-        sendButton.disabled = false;
-
-       
-        messagesContainer.innerHTML = "";
-
-      
-        setTimeout(() => {
-            addMessage("Hello, how are you?", "received");
-        }, 1000);
-
-        
-        document.getElementById("chatForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            const message = messageInput.value.trim();
-            if (message !== "") {
-                addMessage(message, "sent");
-                messageInput.value = "";
             
+            document.getElementById("membersTitle").textContent = translations[language].members;
+            document.getElementById("chatWith").textContent = translations[language].selectChat;
+            document.getElementById("messageInput").placeholder = translations[language].placeholder;
+            document.querySelector("button[type='submit']").textContent = translations[language].send;
+
+            const membersList = document.getElementById("membersList");
+            const chatArea = document.getElementById("chatArea");
+            const chatWith = document.getElementById("chatWith");
+            const messageInput = document.getElementById("messageInput");
+            const sendButton = chatArea.querySelector("button");
+            const messagesContainer = document.getElementById("messagesContainer");
+
+            const membersWithRequests = JSON.parse(localStorage.getItem("sentRequests")) || [];
+
+            membersWithRequests.forEach(member => {
+                const memberItem = document.createElement("li");
+                memberItem.classList.add("cursor-pointer", "py-2", "px-4", "hover:bg-gray-200", "rounded-md");
+                memberItem.textContent = member.name;
+                memberItem.dataset.id = member.id;
+                memberItem.addEventListener("click", function() {
+                    openChatWithMember(member);
+                });
+                membersList.appendChild(memberItem);
+            });
+
+            function openChatWithMember(member) {
+                chatWith.textContent = `Chat with ${member.name}`;
+                messageInput.disabled = false;
+                sendButton.disabled = false;
+                messagesContainer.innerHTML = "";
                 setTimeout(() => {
-                    addMessage("I'm doing great, thanks for asking!", "received");
+                    addMessage("Hello, how are you?", "received");
                 }, 1000);
+
+                document.getElementById("chatForm").addEventListener("submit", function(event) {
+                    event.preventDefault();
+                    const message = messageInput.value.trim();
+                    if (message !== "") {
+                        addMessage(message, "sent");
+                        messageInput.value = "";
+                        setTimeout(() => {
+                            addMessage("I'm doing great, thanks for asking!", "received");
+                        }, 1000);
+                    }
+                });
+            }
+
+            function addMessage(messageText, type) {
+                const messageDiv = document.createElement("div");
+                messageDiv.classList.add("message", type);
+                messageDiv.textContent = messageText;
+                messagesContainer.appendChild(messageDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }
         });
-    }
-
- 
-    function addMessage(messageText, type) {
-        const messageDiv = document.createElement("div");
-        messageDiv.classList.add("message", type);
-        messageDiv.textContent = messageText;
-        messagesContainer.appendChild(messageDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight; }
-});
-
-    function sendRequestToMember(memberId, memberName) {
-        const requests = JSON.parse(localStorage.getItem("sentRequests")) || [];
-        const newRequest = { id: memberId, name: memberName };
-        requests.push(newRequest);
-        localStorage.setItem("sentRequests", JSON.stringify(requests));
-    }
- 
     </script>
 </body>
 </html>
+
 
