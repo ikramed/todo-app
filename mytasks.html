@@ -41,37 +41,55 @@
             outline: none;
             color: #000;
         }
+        #language-select {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
+    <select id="language-select" onchange="changeLanguage(event)">
+        <option value="en">English</option>
+        <option value="ar">Arabic</option>
+        <option value="fr">French</option>
+    </select>
+
     <button onclick="window.location.href='dashboard.html'" class="bg-blue-500 text-white px-4 py-2 rounded-md mb-4">← Back</button>
     
     <div class="task-container">
-        <h2 class="text-center text-2xl font-semibold mb-5">Add Task</h2>
+        <h2 class="text-center text-2xl font-semibold mb-5" id="add-task-title">Add Task</h2>
         
-        <label>Task Name</label>
+        <label id="task-name-label">Task Name</label>
         <input type="text" id="taskName" class="input-field" placeholder="Enter task name">
         
-        <label>Date</label>
+        <label id="task-date-label">Date</label>
         <input type="date" id="taskDate" class="input-field">
         
-        <label>Start Time</label>
+        <label id="start-time-label">Start Time</label>
         <input type="time" id="startTime" class="input-field">
         
-        <label>End Time</label>
+        <label id="end-time-label">End Time</label>
         <input type="time" id="endTime" class="input-field">
         
-        <button onclick="saveTask()" class="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600">Save</button>
+        <button onclick="saveTask()" class="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600" id="save-task-btn">Save</button>
     </div>
     
     <div class="task-container mt-6">
-        <h2 class="text-center text-2xl font-semibold mb-5">My Tasks</h2>
+        <h2 class="text-center text-2xl font-semibold mb-5" id="my-tasks-title">My Tasks</h2>
         <div id="taskList"></div>
     </div>
     
     <script>
-       
         window.onload = function() {
+            const savedLanguage = localStorage.getItem('language') || 'en';
+            loadLanguage(savedLanguage);
+            
             let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
             tasks.forEach(task => {
                 displayTask(task);
@@ -96,9 +114,7 @@
                 tasks.push(newTask);
                 localStorage.setItem("tasks", JSON.stringify(tasks));
 
-               
                 displayTask(newTask);
-                
                 
                 document.getElementById("taskName").value = "";
                 document.getElementById("taskDate").value = "";
@@ -130,7 +146,6 @@
             const taskItem = button.parentElement.parentElement;
             taskItem.remove();
 
-           
             let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
             tasks = tasks.filter(task => task.name !== taskItem.querySelector("strong").textContent);
             localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -147,16 +162,59 @@
             document.getElementById("startTime").value = startTime;
             document.getElementById("endTime").value = endTime;
 
-          
             let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
             tasks = tasks.filter(task => task.name !== taskName);
             localStorage.setItem("tasks", JSON.stringify(tasks));
 
-           
             taskItem.remove();
+        }
+
+        function changeLanguage(event) {
+            const selectedLanguage = event.target.value;
+            localStorage.setItem('language', selectedLanguage);
+            loadLanguage(selectedLanguage);
+        }
+
+        function loadLanguage(language) {
+            const texts = {
+                en: {
+                    "add-task-title": "Add Task",
+                    "task-name-label": "Task Name",
+                    "task-date-label": "Date",
+                    "start-time-label": "Start Time",
+                    "end-time-label": "End Time",
+                    "save-task-btn": "Save",
+                    "my-tasks-title": "My Tasks"
+                },
+                ar: {
+                    "add-task-title": "إضافة مهمة",
+                    "task-name-label": "اسم المهمة",
+                    "task-date-label": "التاريخ",
+                    "start-time-label": "وقت البدء",
+                    "end-time-label": "وقت الانتهاء",
+                    "save-task-btn": "حفظ",
+                    "my-tasks-title": "مهامي"
+                },
+                fr: {
+                    "add-task-title": "Ajouter une tâche",
+                    "task-name-label": "Nom de la tâche",
+                    "task-date-label": "Date",
+                    "start-time-label": "Heure de début",
+                    "end-time-label": "Heure de fin",
+                    "save-task-btn": "Enregistrer",
+                    "my-tasks-title": "Mes tâches"
+                }
+            };
+
+            document.getElementById("add-task-title").innerText = texts[language]["add-task-title"];
+            document.getElementById("task-name-label").innerText = texts[language]["task-name-label"];
+            document.getElementById("task-date-label").innerText = texts[language]["task-date-label"];
+            document.getElementById("start-time-label").innerText = texts[language]["start-time-label"];
+            document.getElementById("end-time-label").innerText = texts[language]["end-time-label"];
+            document.getElementById("save-task-btn").innerText = texts[language]["save-task-btn"];
+            document.getElementById("my-tasks-title").innerText = texts[language]["my-tasks-title"];
         }
     </script>
 </body>
 </html>
-
 
