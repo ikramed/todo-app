@@ -8,16 +8,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
     <style>
-        
         body {
             font-family: 'Arial', sans-serif;
             background: linear-gradient(45deg, #6a11cb, #2575fc);
             color: #fff;
             padding: 20px;
             margin: 0;
+            transition: all 0.3s ease-in-out;
         }
 
-       
         .back-button {
             position: absolute;
             top: 20px;
@@ -44,7 +43,6 @@
             fill: white;
         }
 
-     
         .about-container {
             max-width: 800px;
             margin: 60px auto;
@@ -52,6 +50,8 @@
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            transition: all 0.3s ease-in-out;
         }
 
         .about-title {
@@ -65,92 +65,110 @@
             font-size: 16px;
             line-height: 1.6;
             color: #ddd;
-            text-align: center;
-        }
-
-        
-        .background-circle {
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            animation: moveBackground 6s infinite ease-in-out;
-        }
-
-        .background-circle:nth-child(1) {
-            top: 30%;
-            left: -70px;
-            animation-duration: 6s;
-        }
-
-        .background-circle:nth-child(2) {
-            top: 60%;
-            right: -100px;
-            animation-duration: 9s;
-        }
-
-        .background-circle:nth-child(3) {
-            bottom: 20%;
-            left: 50%;
-            animation-duration: 8s;
-        }
-
-        @keyframes moveBackground {
-            0% {
-                transform: translateX(0) translateY(0);
-            }
-            50% {
-                transform: translateX(30px) translateY(30px);
-            }
-            100% {
-                transform: translateX(0) translateY(0);
-            }
         }
     </style>
 </head>
 <body>
 
-   
     <button class="back-button" onclick="goBack()">
         <svg viewBox="0 0 24 24">
             <path d="M15 19l-7-7 7-7"></path>
         </svg>
     </button>
 
-    <div class="background-circle"></div>
-    <div class="background-circle"></div>
-    <div class="background-circle"></div>
-
     <div class="about-container">
-        <h2 class="about-title">About This App</h2>
+        <h2 id="about-title" class="about-title"></h2>
         
-        <p class="about-text">
-            Welcome to our application! This app is designed to help users manage their tasks efficiently, 
-            communicate with their team, and enhance productivity. Our goal is to provide a smooth user experience 
-            with an intuitive design and powerful features.
-        </p>
+        <p id="about-description" class="about-text"></p>
 
-        <p class="about-text mt-4">
-            <strong>Key Features:</strong><br>
-            - Secure and easy-to-use interface.<br>
-            - Real-time messaging system.<br>
-            - Task progress tracking.<br>
-            - Notifications and reminders.<br>
-            - Multi-language support.<br>
+        <p class="about-text mt-4" style="direction: ltr; text-align: center;">
+            <strong id="about-features"></strong><br>
+            <span id="feature-list">
+                - Secure and easy-to-use interface.<br>
+                - Real-time messaging system.<br>
+                - Task progress tracking.<br>
+                - Notifications and reminders.<br>
+                - Multi-language support.<br>
+            </span>
         </p>
-
-        <p class="about-text mt-4">
-            <strong>Version:</strong> 1.0.0<br>
-            <strong>Developer:</strong> DevStrom Team<br>
-            <strong>Contact:</strong> devstrom@gmail.com<br>
+        
+        <p class="about-text mt-4" style="text-align: center;">
+            <strong id="about-version"></strong><br>
+            <strong id="about-developer"></strong><br>
+            <strong id="about-contact"></strong><br>
         </p>
+        
     </div>
 
     <script>
         function goBack() {
-            window.location.href = "setting.html"; }
+            window.location.href = "setting.html";
+        }
+
+        const translations = {
+            en: {
+                title: "About This App",
+                description: "Welcome to our application! This app is designed to help users manage their tasks efficiently, communicate with their team, and enhance productivity.",
+                features: "Key Features:",
+                featureList: `- Secure and easy-to-use interface.<br>
+                              - Real-time messaging system.<br>
+                              - Task progress tracking.<br>
+                              - Notifications and reminders.<br>
+                              - Multi-language support.`,
+                version: "Version: 1.0.0",
+                developer: "Developer: DevStrom Team",
+                contact: "Contact: devstrom@gmail.com",
+                dir: "ltr"
+            },
+            fr: {
+                title: "À propos de cette application",
+                description: "Bienvenue sur notre application ! Cette application est conçue pour aider les utilisateurs à gérer leurs tâches efficacement, à communiquer avec leur équipe et à améliorer leur productivité.",
+                features: "Caractéristiques clés :",
+                featureList: `- Interface sécurisée et facile à utiliser.<br>
+                              - Système de messagerie en temps réel.<br>
+                              - Suivi de l'avancement des tâches.<br>
+                              - Notifications et rappels.<br>
+                              - Support multilingue.`,
+                version: "Version : 1.0.0",
+                developer: "Développeur : DevStrom Team",
+                contact: "Contact : devstrom@gmail.com",
+                dir: "ltr"
+            },
+            ar: {
+                title: "حول التطبيق",
+                description: "مرحبًا بك في تطبيقنا! تم تصميم هذا التطبيق لمساعدة المستخدمين على إدارة مهامهم بكفاءة، والتواصل مع فريقهم، وزيادة الإنتاجية.",
+                features: "الميزات الرئيسية:",
+                featureList: `- واجهة آمنة وسهلة الاستخدام.<br>
+                              - نظام مراسلة في الوقت الفعلي.<br>
+                              - تتبع تقدم المهام.<br>
+                              - إشعارات وتذكيرات.<br>
+                              - دعم متعدد اللغات.`,
+                version: "الإصدار: 1.0.0",
+                developer: "المطور: فريق DevStrom",
+                contact: "الاتصال: devstrom@gmail.com",
+                dir: "rtl"
+            }
+        };
+
+        function updateLanguage() {
+            let lang = localStorage.getItem("language") || "en"; 
+            document.documentElement.lang = lang;
+            document.body.dir = translations[lang].dir;
+
+            document.getElementById("about-title").innerText = translations[lang].title;
+            document.getElementById("about-description").innerText = translations[lang].description;
+            document.getElementById("about-features").innerText = translations[lang].features;
+            document.getElementById("feature-list").innerHTML = translations[lang].featureList;
+            document.getElementById("about-version").innerText = translations[lang].version;
+            document.getElementById("about-developer").innerText = translations[lang].developer;
+            document.getElementById("about-contact").innerText = translations[lang].contact;
+
+            document.querySelector(".about-container").style.textAlign = lang === "ar" ? "right" : "left";
+        }
+
+        window.onload = updateLanguage;
     </script>
 
 </body>
 </html>
+
