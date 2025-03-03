@@ -17,7 +17,6 @@
             overflow: hidden;
         }
 
-        /* خطوط متحركة */
         .moving-line {
             position: absolute;
             width: 100%;
@@ -79,49 +78,150 @@
         .btn:hover {
             background: #573e10;
         }
+
+        #language-select {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
+    <select id="language-select" onchange="changeLanguage(event)">
+        <option value="en">English</option>
+        <option value="ar">Arabic</option>
+        <option value="fr">French</option>
+    </select>
+
     <div class="moving-line"></div>
     <div class="moving-line"></div>
     <div class="moving-line"></div>
     
     <div class="container">
-        <h2 class="text-2xl font-semibold mb-4">Join My Team</h2>
-        <p class="mb-4">Fill out the form below to request to join the team.</p>
+        <h2 class="text-2xl font-semibold mb-4" id="join-team-title">Join My Team</h2>
+        <p id="join-team-description" class="mb-4">Fill out the form below to request to join the team.</p>
         
-        <input type="text" class="input-field" placeholder="Your Name" required>
-        <input type="email" class="input-field" placeholder="Your Email" required>
+        <input type="text" class="input-field" placeholder="Your Name" id="name" required>
+        <input type="email" class="input-field" placeholder="Your Email" id="email" required>
+        <input type="email" class="input-field" placeholder="Invite Email (optional)" id="inviteEmail">
         
-        <button class="btn">Send Request</button>
+        <textarea class="input-field" placeholder="Message (optional)" id="message" rows="4"></textarea>
+        
+        <button class="btn" id="sendRequest">Send Request</button>
     </div>
     
     <button onclick="window.location.href='profile.html'" class="btn" style="width: auto; margin: 20px auto; display: block;">← Back to Profile</button>
     
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script>
-        document.querySelector(".container .btn").addEventListener("click", function() {
-            const nameInput = document.querySelector(".input-field[type='text']");
-            const emailInput = document.querySelector(".input-field[type='email']");
+        emailjs.init('YOUR_USER_ID');
+
+        document.getElementById("sendRequest").addEventListener("click", function() {
+            const nameInput = document.getElementById("name");
+            const emailInput = document.getElementById("email");
+            const inviteEmailInput = document.getElementById("inviteEmail");
+            const messageInput = document.getElementById("message");
+
             const name = nameInput.value.trim();
             const email = emailInput.value.trim();
+            const inviteEmail = inviteEmailInput.value.trim();
+            const message = messageInput.value.trim();
             
             if (name === "" || email === "") {
-                alert("Please fill out all fields.");
+                alert("Please fill out all required fields.");
                 return;
             }
 
             let members = JSON.parse(localStorage.getItem("teamMembers")) || [];
-            members.push({ name, email, img: 'path/to/member/image.png' }); // حط مسار الصورة ديال العضو هنا
+            members.push({ 
+                name, 
+                email, 
+                inviteEmail, 
+                message, 
+                img: 'path/to/member/image.png'
+            });
             localStorage.setItem("teamMembers", JSON.stringify(members));
 
-            alert("Request sent successfully!");
+            const templateParams = {
+                user_name: name,
+                user_email: email,
+                invite_email: inviteEmail,
+                message: message
+            };
 
-            // تنظيف الحقول بعد الإرسال
-            nameInput.value = "";
-            emailInput.value = "";
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+                .then(function(response) {
+                    alert("Request sent successfully!");
+                    nameInput.value = "";
+                    emailInput.value = "";
+                    inviteEmailInput.value = "";
+                    messageInput.value = "";
+                }, function(error) {
+                    alert("Failed to send the request. Please try again later.");
+                });
         });
+
+        window.onload = () => {
+            const savedLanguage = localStorage.getItem('language') || 'en';
+            document.documentElement.lang = savedLanguage;
+            loadLanguage(savedLanguage);
+            document.getElementById('language-select').value = savedLanguage;
+        };
+
+        function changeLanguage(event) {
+            const selectedLanguage = event.target.value;
+            localStorage.setItem('language', selectedLanguage);
+            loadLanguage(selectedLanguage);
+        }
+
+        function loadLanguage(language) {
+            const texts = {
+                en: {
+                    "join-team-title": "Join My Team",
+                    "join-team-description": "Fill out the form below to request to join the team.",
+                    "name-placeholder": "Your Name",
+                    "email-placeholder": "Your Email",
+                    "invite-email-placeholder": "Invite Email (optional)",
+                    "message-placeholder": "Message (optional)",
+                    "send-request-button": "Send Request",
+                    "back-profile-button": "← Back to Profile"
+                },
+                ar: {
+                    "join-team-title": "انضم إلى فريقي",
+                    "join-team-description": "املأ النموذج أدناه لطلب الانضمام إلى الفريق.",
+                    "name-placeholder": "اسمك",
+                    "email-placeholder": "بريدك الإلكتروني",
+                    "invite-email-placeholder": "البريد الإلكتروني للدعوة (اختياري)",
+                    "message-placeholder": "الرسالة (اختياري)",
+                    "send-request-button": "إرسال الطلب",
+                    "back-profile-button": "← العودة إلى الملف الشخصي"
+                },
+                fr: {
+                    "join-team-title": "Rejoignez mon équipe",
+                    "join-team-description": "Remplissez le formulaire ci-dessous pour demander à rejoindre l'équipe.",
+                    "name-placeholder": "Votre Nom",
+                    "email-placeholder": "Votre Email",
+                    "invite-email-placeholder": "Email d'invitation (optionnel)",
+                    "message-placeholder": "Message (optionnel)",
+                    "send-request-button": "Envoyer la demande",
+                    "back-profile-button": "← Retour au profil"
+                }
+            };
+
+            document.getElementById("join-team-title").innerText = texts[language]["join-team-title"];
+            document.getElementById("join-team-description").innerText = texts[language]["join-team-description"];
+            document.getElementById("name").placeholder = texts[language]["name-placeholder"];
+            document.getElementById("email").placeholder = texts[language]["email-placeholder"];
+            document.getElementById("inviteEmail").placeholder = texts[language]["invite-email-placeholder"];
+            document.getElementById("message").placeholder = texts[language]["message-placeholder"];
+            document.getElementById("sendRequest").innerText = texts[language]["send-request-button"];
+            document.querySelector("button[onclick]").innerText = texts[language]["back-profile-button"];
+        }
     </script>
-    
 </body>
 </html>
-
