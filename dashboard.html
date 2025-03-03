@@ -8,10 +8,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     
     <style>
-        
         .card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+        .logo {
+    background-color: #fcf1f1; 
+    margin-top: 10px;
+    margin-bottom: 20px; 
+    padding: 20px;
+    border-radius: 50%; 
+    text-align: center; 
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    width: 100px; 
+    height: 100px; 
+}
+
+.logo-img {
+    max-width: 80%; 
+    height: auto; 
+}
+
 
         .card:hover {
             transform: translateY(-10px); 
@@ -27,7 +45,6 @@
             transform: translateY(-3px);
         }
 
-       
         .rounded-card {
             border-radius: 15px;
         }
@@ -38,27 +55,64 @@
             color: transparent;
             font-weight: bold;
         }
+        #sidebar ul li a {
+    font-size: 19px;
+    padding: 16px 20px; 
+    transition: background-color 0.3s ease; 
+}
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #ffffff;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .bottom-nav a {
+            text-align: center;
+            flex: 1;
+            color: #333;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        .bottom-nav a:hover {
+            color: #0066cc;
+        }
+
+        @media (max-width: 768px) {
+            #sidebar {
+                display: none;
+            }
+        }
+        
     </style>
 </head>
 
-<body class="bg-white text-black flex">
+<body class="bg-white text-black flex flex-col min-h-screen">
   
-    <div id="sidebar" class="w-16 bg-blue-600 text-white p-6 transition-all duration-300 ease-in-out fixed h-full hover:w-64 md:w-64">
-        
-        <div class="flex justify-center items-center mb-6 md:hidden">
-            <span class="fas fa-bars text-white text-2xl cursor-pointer" onclick="toggleSidebar()"></span>
-        </div>
-
-       
+    <div id="sidebar" class="w-16 bg-blue-600 text-white p-6 transition-all duration-300 ease-in-out fixed h-full hover:w-64 md:w-64 hidden md:block">
         <div class="space-y-4">
-            <ul class="hidden md:block">
-                <li><a href="#" class="block py-2 px-4 text-gray-200 hover:bg-blue-500 rounded-md">Home</a></li>
+            <div class="logo">
+                <img src="logo.png" alt="Logo" class="logo-img">
+            </div>
+            <br><br><br>
+            <ul>
+                <li><a href="dashboard.html" class="block py-2 px-4 text-gray-200 hover:bg-blue-500 rounded-md">Home</a></li>
                 <li><a href="profile.html" class="block py-2 px-4 text-gray-200 hover:bg-blue-500 rounded-md">Profile</a></li>
                 <li><a href="setting.html" class="block py-2 px-4 text-gray-200 hover:bg-blue-500 rounded-md">Settings</a></li>
             </ul>
         </div>
+        <div class="absolute bottom-6 left-0 w-full px-6">
+            <a href="login.html" class="block py-2 px-4 text-gray-200 hover:bg-red-500 rounded-md text-center">Logout</a>
+        </div>
     </div>
-
 
     <div class="flex-1 p-8 ml-16 md:ml-64 bg-white">
         <div class="flex justify-between items-center mb-8">
@@ -72,10 +126,7 @@
             <h3 class="slanted text-3xl">Let's make a habit together!</h3>
         </div>
 
-       
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-
-           
             <a href="creatbok.html" class="card rounded-card bg-white shadow-lg p-6">
                 <h4 class="font-semibold">Create Detail Booking</h4>
                 <div class="h-2 bg-blue-600 mt-4 w-3/5 rounded-full"></div>
@@ -88,14 +139,18 @@
                 <p class="mt-2 text-sm text-gray-500">50% complete</p>
             </a>
 
-          
             <a href="mytasks.html" class="card rounded-card bg-white shadow-lg p-6">
                 <h4 class="font-semibold">Review Tasks</h4>
                 <div class="h-2 bg-red-600 mt-4 w-2/3 rounded-full"></div>
                 <p class="mt-2 text-sm text-gray-500">80% complete</p>
             </a>
-
         </div>
+    </div>
+
+    <div class="bottom-nav md:hidden">
+        <a href="dashboard.html"><i class="fas fa-home"></i></a>
+        <a href="setting.html"><i class="fas fa-cog"></i></a>
+        <a href="profile.html"><i class="fas fa-user"></i></a>
     </div>
 
     <script>
